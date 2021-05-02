@@ -1,0 +1,26 @@
+version: '3.8'
+services:
+    template:
+        build:
+            context: ./template
+            target: development
+        volumes:
+            - ./template:/src
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    template2:
+        build:
+            context: ./template2
+            target: development
+        volumes:
+            - ./template2:/src
+        command: npm run start:dev
+        ports:
+            - "8080:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
