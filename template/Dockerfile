@@ -15,4 +15,4 @@ CMD ["node", "build/"]
 
 FROM base as development
 ENV NODE_ENV=development
-CMD ["npm", "start:dev"]
+CMD ["npm", "run", "start:dev"]
