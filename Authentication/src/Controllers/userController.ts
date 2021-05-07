@@ -50,6 +50,49 @@ export class UserController {
     }
   };
 
+  public signin = async (_req: Request, _res: Response) => {
+    try {
+      let user = await User.findOneOrFail({
+        email: _req.body.email,
+      });
+      if (!user)
+        return _res.status(404).json({
+          message: "user Not Exist",
+        });
+
+      const isMatch = await bcrypt.compare(_req.body.password, user.password);
+      if (!isMatch)
+        return _res.status(400).json({
+          message: "Incorrect Password !",
+        });
+
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
+      jwt.sign(
+        payload,
+        "randomString",
+        {
+          expiresIn: 10000,
+        },
+        (err, token) => {
+          if (err) throw err;
+          _res.status(200).json({
+            token,
+          });
+        }
+      );
+    } catch (e) {
+      console.error(e);
+      _res.status(500).json({
+        message: "Server Error",
+      });
+    }
+  };
+
   public index = async (_: Request, res: Response) => {
     const users = await User.find();
     res.json(users);
@@ -66,6 +109,7 @@ export class UserController {
   public routes() {
     this.router.get("/", this.index);
     this.router.post("/signup", this.signup);
+    this.router.post("/signin", this.signin);
     this.router.put("/:id", this.update);
     this.router.delete("/:id", this.delete);
   }
