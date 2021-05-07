@@ -4,6 +4,7 @@ import {
   Column,
   Generated,
   BaseEntity,
+  CreateDateColumn,
 } from "typeorm";
 import { IsEmail, Length } from "class-validator";
 
@@ -18,9 +19,16 @@ export class User extends BaseEntity {
   email: string;
 
   @Column()
-  password: String;
+  password: string;
 
   @Column()
   @Generated("uuid")
   uuid: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  toJSON() {
+    return { ...this, id: undefined, password: undefined };
+  }
 }
