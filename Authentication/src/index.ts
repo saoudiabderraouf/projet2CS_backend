@@ -5,10 +5,10 @@ import { Request, Response, json } from "express";
 import * as cors from "cors";
 import * as morgan from "morgan";
 
-import { UserController } from "./Controllers/userController";
+import { AuthenticationRoutes } from "./Routes/userRoutes";
 
 class Server {
-  private userController: UserController;
+  private authenticationRoutes: AuthenticationRoutes;
   private app: express.Application;
 
   constructor() {
@@ -35,13 +35,8 @@ class Server {
    * Method to configure the routes
    */
   public routes() {
-    this.userController = new UserController();
-
-    this.app.get("/", (_req: Request, res: Response) => {
-      res.send("Hello world!");
-    });
-
-    this.app.use(`/api/user/`, this.userController.router); // Configure the new routes of the controller user
+    this.authenticationRoutes = new AuthenticationRoutes();
+    this.app.use(`/`, this.authenticationRoutes.router); // Configure the new routes of the controller user
   }
 
   /**

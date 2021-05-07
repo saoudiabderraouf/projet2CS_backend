@@ -5,13 +5,6 @@ import * as jwt from "jsonwebtoken";
 import { User } from "../entity/Authentication";
 
 export class UserController {
-  public router: Router;
-
-  constructor() {
-    this.router = Router();
-    this.routes();
-  }
-
   public signup = async (_req: Request, res: Response) => {
     try {
       const user = await User.create({
@@ -107,12 +100,4 @@ export class UserController {
   public delete = async (_: Request, res: Response) => {
     res.send("Delete");
   };
-
-  public routes() {
-    this.router.get("/", this.index);
-    this.router.post("/signup", this.signup);
-    this.router.post("/signin", this.signin);
-    this.router.put("/:id", this.update);
-    this.router.delete("/:id", this.delete);
-  }
 }
