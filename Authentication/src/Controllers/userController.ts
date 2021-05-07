@@ -37,7 +37,7 @@ export class UserController {
         },
         (err, token) => {
           if (err) throw err;
-          res.status(200).json({
+          res.status(201).json({
             token,
             user,
           });
