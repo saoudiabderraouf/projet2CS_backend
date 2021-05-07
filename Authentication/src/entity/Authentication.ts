@@ -8,7 +8,7 @@ import {
 } from "typeorm";
 import { IsEmail, IsEnum, Length } from "class-validator";
 
-@Entity("users")
+@Entity("Auth_utilisateur")
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: string;
