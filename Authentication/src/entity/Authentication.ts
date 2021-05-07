@@ -6,7 +6,7 @@ import {
   BaseEntity,
   CreateDateColumn,
 } from "typeorm";
-import { IsEmail, Length } from "class-validator";
+import { IsEmail, IsEnum, Length } from "class-validator";
 
 @Entity("users")
 export class User extends BaseEntity {
@@ -27,6 +27,29 @@ export class User extends BaseEntity {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @Column({
+    type: "enum",
+    enum: [
+      "locataire",
+      "agent",
+      "decideur",
+      "adminAegnt",
+      "adminCompte",
+      "adminTechnique",
+    ],
+    default: "locataire",
+  })
+  @IsEnum([
+    "locataire",
+    "agent",
+    "decideur",
+    "adminAegnt",
+    "adminCompte",
+    "adminTechnique",
+    undefined,
+  ])
+  role: string;
 
   toJSON() {
     return { ...this, id: undefined, password: undefined };

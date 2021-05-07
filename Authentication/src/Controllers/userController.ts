@@ -1,7 +1,8 @@
 import { Router, Request, Response } from "express";
-import { User } from "../entity/Authentication";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
+
+import { User } from "../entity/Authentication";
 
 export class UserController {
   public router: Router;
@@ -16,6 +17,7 @@ export class UserController {
       const user = await User.create({
         email: _req.body.email,
         password: _req.body.password,
+        role: _req.body.role,
       });
 
       const salt = await bcrypt.genSalt(10);
