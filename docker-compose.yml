@@ -13,4 +13,43 @@ services:
       environment: 
           NODE_ENV: development
           DEBUG: src:*
+    adminagentapi:
+        build:
+            context: ./adminagentapi
+            target: development
+        volumes:
+            - ./adminagentapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    admincompteapi:
+        build:
+            context: ./admincompteapi
+            target: development
+        volumes:
+            - ./admincompteapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    admintechniqueapi:
+        build:
+            context: ./admintechniqueapi
+            target: development
+        volumes:
+            - ./admintechniqueapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
     
