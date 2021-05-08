@@ -13,7 +13,7 @@
      "strictFunctionTypes": true,
      "noImplicitThis": true,
      "noUnusedParameters": true,
-     "noImplicitReturns": true,
+     "noImplicitReturns": false,
      "noFallthroughCasesInSwitch": true,
      "allowSyntheticDefaultImports": false,
      "emitDecoratorMetadata": true,
