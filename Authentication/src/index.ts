@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import * as express from "express";
-import { Request, Response, json } from "express";
+import { json } from "express";
 import * as cors from "cors";
 import * as morgan from "morgan";
 
@@ -28,7 +28,6 @@ class Server {
    */
   public configuration() {
     this.app.set("port", process.env.PORT || 8000);
-    this.app.use(express.json());
   }
 
   /**
