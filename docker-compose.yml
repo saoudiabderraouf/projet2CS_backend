@@ -1,11 +1,24 @@
 version: '3.8'
 services:
-    template:
+    userapi:
+      build:
+          context: ./userapi
+          target: development
+      volumes:
+          - ./userapi:/src
+          - /src/node_modules
+      command: npm run start:dev
+      ports:
+          - "8000:8000"
+      environment: 
+          NODE_ENV: development
+          DEBUG: src:*
+    adminagentapi:
         build:
-            context: ./template
+            context: ./adminagentapi
             target: development
         volumes:
-            - ./template:/src
+            - ./adminagentapi:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
@@ -13,3 +26,30 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+    admincompteapi:
+        build:
+            context: ./admincompteapi
+            target: development
+        volumes:
+            - ./admincompteapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    admintechniqueapi:
+        build:
+            context: ./admintechniqueapi
+            target: development
+        volumes:
+            - ./admintechniqueapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    
