@@ -23,7 +23,7 @@ export class AuthenticationRoutes {
     this.router.get("/", this.userController.index);
     this.router.post("/signup", this.userController.signup);
     this.router.post("/signin", this.userController.signin);
-    this.router.put("/:id", this.userController.update);
-    this.router.delete("/:id", this.userController.delete);
+    this.router.put("/:uuid", this.userController.update);
+    this.router.delete("/:uuid", this.userController.delete);
   }
 }

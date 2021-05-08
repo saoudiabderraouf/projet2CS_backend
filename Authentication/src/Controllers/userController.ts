@@ -93,11 +93,40 @@ export class UserController {
     res.json(users);
   };
 
-  public update = async (_: Request, res: Response) => {
-    res.send("Update");
+  public update = async (_req: Request, res: Response) => {
+    const uuid = _req.params.uuid;
+    const { email, password, role } = _req.body;
+
+    try {
+      const user = await User.findOneOrFail({ uuid });
+
+      user.email = email || user.email;
+      user.password = password || user.password;
+      user.role = role || user.role;
+
+      await user.save();
+
+      return res.status(200).json({
+        user,
+      });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Something went wrong" });
+    }
   };
 
-  public delete = async (_: Request, res: Response) => {
-    res.send("Delete");
+  public delete = async (_req: Request, res: Response) => {
+    const uuid = _req.params.uuid;
+
+    try {
+      const user = await User.findOneOrFail({ uuid });
+
+      await user.remove();
+
+      return res.status(204).json({ message: "User deleted successfully" });
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json({ error: "Something went wrong" });
+    }
   };
 }
