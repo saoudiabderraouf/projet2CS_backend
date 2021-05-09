@@ -52,4 +52,43 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+    decideurapi:
+        build:
+            context: ./decideurapi
+            target: development
+        volumes:
+            - ./decideurapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    agentapi:
+        build:
+            context: ./agentapi
+            target: development
+        volumes:
+            - ./agentapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    locataireapi:
+        build:
+            context: ./locataireapi
+            target: development
+        volumes:
+            - ./locataireapi:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8000:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
     
