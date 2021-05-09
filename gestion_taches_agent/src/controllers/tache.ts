@@ -17,7 +17,7 @@ export const addTache = async (req: Request, res: Response) => {
         }); 
     
         await tache.save(); 
-        return res.send(Tache); 
+        return res.send(tache); 
     }catch (err){
         console.log(err); 
         return res.status(500).json(err); 
@@ -58,11 +58,10 @@ export async function updateTache(req: Request, res: Response) {
 //Delete
 export async function deleteTache(req: Request, res: Response) {
     const id = req.params.id; 
-    // console.log(id); 
     try {
-        const tache = await Tache.findOneOrFail();
+        const tache = await Tache.findOneOrFail(id);
         await tache.remove(); 
-        return res.status(204).json({ message: 'Tâche supprimée avec succès' })
+        return res.json({ message: 'Tâche supprimée avec succès' })
     } catch (err){
         console.log(err); 
         return res.status(500).json(err);
@@ -70,21 +69,16 @@ export async function deleteTache(req: Request, res: Response) {
     
 }
 
-//Find one by id
+//Find one task by id
 export async function getTache(req: Request, res: Response) {
     const id = req.params.id; 
-    //console.log(id); 
     try {
-        const tache = await Tache.findOne(id);
+        const tache = await Tache.findOneOrFail(id);
         return res.json(tache); 
     } catch (err){
         console.log(err); 
-        return res.status(404).json({ message: 'Tâche introuvable' }); 
+        return res.json({ message: 'Tâche introuvable' }); 
     }
     
 }
-
-
-
-
 
