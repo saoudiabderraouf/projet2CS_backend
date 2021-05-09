@@ -28,7 +28,10 @@ export const getAgent =  (req: Request, res: Response) => {
 export const addAgent = async (req: Request, res: Response) => {
     const agent = Agent.create({
         idUtilisateur: req.body.idUtilisateur,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
         adresse: req.body.adresse,
+        photo: req.body.photo,
     })
 
     await agent.save()
@@ -42,7 +45,7 @@ export async function getAgents(_req: Request, res: Response) {
 
 export const updateAgent = async (req: Request, res: Response) => {
     
-    if(!req.body.idUtilisateur && !req.body.adresse) {
+    if(!req.body.idUtilisateur && !req.body.nom && !req.body.prenom && !req.body.adresse && !req.body.photo) {
         return res.status(400).send({
             message: "Agent content ne doit pas étre vide"
         });
@@ -50,7 +53,10 @@ export const updateAgent = async (req: Request, res: Response) => {
 
     Agent.update({idAgent: parseInt(req.params.agentId)}, {
         idUtilisateur: req.body.idUtilisateur,
+        nom: req.body.nom,
+        prenom: req.body.prenom,
         adresse: req.body.adresse,
+        photo: req.body.photo,
     })
     .then(agent => {
         if(!agent) {
