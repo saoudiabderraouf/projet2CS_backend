@@ -3,7 +3,7 @@ import {createConnection} from "typeorm";
 
 import * as express from 'express';
 import { Request, Response, json } from "express";
-import  * as cors from 'cors';
+import * as cors from 'cors';
 import * as morgan from 'morgan';
 import Router from './routes/'
 
@@ -16,7 +16,7 @@ app.use(morgan("dev"))
 app.use(Router)
 
 createConnection().then(async _connection => {   
-    app.listen(8000, () => {
+    app.listen(8001, () => {
         console.log("server started.")
     })
     
