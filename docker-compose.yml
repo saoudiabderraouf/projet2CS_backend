@@ -13,3 +13,16 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+    utilisateur:
+        build:
+            context: ./utilisateur
+            target: development
+        volumes:
+            - ./utilisateur:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8100:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
