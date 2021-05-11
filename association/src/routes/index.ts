@@ -1,11 +1,15 @@
-import { Namespace } from 'socket.io';
-import { connect, openConnection } from '../controllers/initialize';
+import { Server } from 'socket.io';
+import { Auth, Log } from '../middlewares'
+import connection from './connection';
 
 
-export default function (io: Namespace) {
-    io.on('connection', function (socket) {
-        socket.on("connect", connect);
+export function getConnections(io: Server) {
 
-        socket.on("open", openConnection);
-    })
+}
+
+export default function (io: Server) {
+    io.use(Log);
+    io.use(Auth);
+
+    io.on('connection', connection);
 };
