@@ -13,16 +13,16 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-    userapi:
+    utilisateur:
         build:
-            context: ./userapi
+            context: ./utilisateur
             target: development
         volumes:
-            - ./userapi:/src
+            - ./utilisateur:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
-            - "8000:8000"
+            - "8100:8000"
         environment: 
             NODE_ENV: development
             DEBUG: src:*

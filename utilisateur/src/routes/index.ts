@@ -10,7 +10,6 @@ import { getAdminTechnique, getAdminTechniques, addAdminTechnique, updateAdminTe
 import { getAgent, getAgents, addAgent, updateAgent, deleteAgent } from '../controllers/Agent'
 import { getDecideur, getDecideurs, addDecideur, updateDecideur, deleteDecideur } from '../controllers/Decideur'
 import { getLocataire, getLocataires, addLocataire, updateLocataire, deleteLocataire } from '../controllers/Locataire'
-import { getTypeAbonnement, getTypeAbonnements, addTypeAbonnement, updateTypeAbonnement, deleteTypeAbonnement } from '../controllers/TypeAbonnement'
 import { getAdminCompte, getAdminComptes, addAdminCompte, updateAdminCompte, deleteAdminCompte } from '../controllers/AdminCompte'
 import { getUtilisateur, getUtilisateurs, addUtilisateur, updateUtilisateur, deleteUtilisateur } from '../controllers/Utilisateur'
 import { getTypeUtilisateur, getTypeUtilisateurs, addTypeUtilisateur, updateTypeUtilisateur, deleteTypeUtilisateur } from '../controllers/TypeUtilisateur'
@@ -19,14 +18,13 @@ import { getTypeUtilisateur, getTypeUtilisateurs, addTypeUtilisateur, updateType
 
 const app: express.Application = express();
 
-app.use(json());
 app.use(cors());
 app.use(morgan("dev"));
 
 
 createConnection()
   .then(async (_connection: Connection) => {
-    app.listen(8000, () => {
+    app.listen(8100, () => {
       console.log("server started.");
     });
   })
@@ -99,10 +97,5 @@ router.put('/typeUtilisateur/:typeUtilisateurId', updateTypeUtilisateur)
 router.delete('/typeUtilisateur/:typeUtilisateurId', deleteTypeUtilisateur)
 
 
-router.post('/add-typeAbonnement', addTypeAbonnement)
-router.get('/typeAbonnements', getTypeAbonnements)
-router.get('/typeAbonnements/:typeAbonnementId', getTypeAbonnement)
-router.put('/typeAbonnements/:typeAbonnementId', updateTypeAbonnement)
-router.delete('/typeAbonnements/:typeAbonnementId', deleteTypeAbonnement)
 
 export default router;
