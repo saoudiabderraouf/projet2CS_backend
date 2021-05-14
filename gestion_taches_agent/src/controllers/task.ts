@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
-import {Tache} from "../entity/Tache";
+import { read } from "node:fs";
+import {Task} from "../entity/Task";
 
 export const get =  (_req: Request, res: Response) => {
     res.send("Hello, this is the agent Tasks' management service.");
@@ -8,16 +9,16 @@ export const get =  (_req: Request, res: Response) => {
 //Create 
 export const addTache = async (req: Request, res: Response) => {
     try{ 
-        const tache = Tache.create({
-            idAgent : req.body.idAgent, 
-            idVehicule : req.body.idVehicule, 
+        const task = Task.create({
+            idAgent : req.body.idAgent,
+            idVehicle : req.body.idVehicle, 
             description : req.body.description,
-            idEtat : req.body.idEtat, 
-            idMateriel : req.body.idMateriel, 
+            idTaskState : req.body.idTaskState, 
+            idEquipment : req.body.idEquipment 
         }); 
     
-        await tache.save(); 
-        return res.send(tache); 
+        await task.save(); 
+        return res.send(task); 
     }catch (err){
         console.log(err); 
         return res.status(500).json(err); 
@@ -27,9 +28,9 @@ export const addTache = async (req: Request, res: Response) => {
 //Read 
 export async function getTaches(_req: Request, res: Response) {
     try{
-        const Taches = await Tache.find();
-        console.log(Taches); 
-        return res.json(Taches); 
+        const Tasks = await Task.find();
+        console.log(Tasks); 
+        return res.json(Tasks); 
     } catch (err){
         console.log(err); 
         return res.status(500).json(err); 
@@ -40,14 +41,14 @@ export async function getTaches(_req: Request, res: Response) {
 export async function updateTache(req: Request, res: Response) {
     const id = req.params.id;
     try {
-        const tache = await Tache.findOneOrFail(id); 
-        tache.idAgent = req.body.idAgent; 
-        tache.idVehicule = req.body.idVehicule; 
-        tache.description = req.body.description;
-        tache.idEtat = req.body.idEtat;  
-        tache.idMateriel = req.body.idMateriel; 
-        await tache.save(); 
-        return res.json(tache); 
+        const task = await Task.findOneOrFail(id); 
+        task.idAgent = req.body.idAgent; 
+        task.idVehicle = req.body.idVehicle; 
+        task.description = req.body.description;
+        task.idTaskState = req.body.idTaskState;  
+        task.idEquipment = req.body.idEquipment; 
+        await task.save(); 
+        return res.json(task); 
     } catch (err){
         console.log(err); 
         return res.status(500).json(err); 
@@ -59,8 +60,8 @@ export async function updateTache(req: Request, res: Response) {
 export async function deleteTache(req: Request, res: Response) {
     const id = req.params.id; 
     try {
-        const tache = await Tache.findOneOrFail(id);
-        await tache.remove(); 
+        const task = await Task.findOneOrFail(id);
+        await task.remove(); 
         return res.json({ message: 'Tâche supprimée avec succès' })
     } catch (err){
         console.log(err); 
@@ -73,8 +74,8 @@ export async function deleteTache(req: Request, res: Response) {
 export async function getTache(req: Request, res: Response) {
     const id = req.params.id; 
     try {
-        const tache = await Tache.findOneOrFail(id);
-        return res.json(tache); 
+        const task = await Task.findOneOrFail(id);
+        return res.json(task); 
     } catch (err){
         console.log(err); 
         return res.json({ message: 'Tâche introuvable' }); 
