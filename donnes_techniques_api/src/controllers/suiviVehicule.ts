@@ -31,11 +31,18 @@ export const createVehicleState = async (req: Request, res: Response) => {
     return res.status(500).json(err)
 }
 }
+
+
+
 //READ (return all VehicleStates)
 export async function getVehicleState(_req: Request, res: Response) {
     const vehicle_state = await VehicleState.find();
     return res.json(vehicle_state)
 }
+
+
+
+
 //UPDATE
 export async function updateVehicleState(req: Request, res: Response) {
     const id= req.params.id_state
@@ -58,6 +65,9 @@ export async function updateVehicleState(req: Request, res: Response) {
     }
     
 }
+
+
+
 //DELETE
 export async function deleteVehicleState(req: Request, res: Response) {
     const id= req.params.id_state
@@ -75,6 +85,10 @@ export async function deleteVehicleState(req: Request, res: Response) {
     }
     
 }
+
+
+
+
 //FIND
 export async function findVehicleState(req: Request, res: Response) {
     const id= Number(req.query.idVehicle)
