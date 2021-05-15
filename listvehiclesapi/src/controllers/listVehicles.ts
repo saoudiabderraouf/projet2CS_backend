@@ -53,17 +53,6 @@ export const get = (_req: Request, res: Response) => {
     res.send(vehicle)
 }*/
 
-//add a new state
-export const addState = async (req: Request, res: Response) => {
-    const vehicle = VehicleState.create({
-        availability: req.body.availability,
-        idBorne: req.body.idBorne,
-        idRental: req.body.idRental
-    })
-    await vehicle.save()
-    res.send(vehicle)
-}
-
 //get All vehicles
 export async function getV(req: Request, res: Response) {
    const page=Number(req.query.page || "0")
