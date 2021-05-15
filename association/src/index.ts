@@ -31,7 +31,7 @@ const options: Partial<ServerOptions> = {
 const socket = new Server(server, options);
 
 const redisClient = createClient({
-    url: "http://redis:6379"
+    url: "redis://127.0.0.1:6379"
 });
 
 initConnection(socket, app, redisClient);

@@ -9,7 +9,7 @@ export default function (io: Server, app: Express, redis: RedisClient) {
     io.use(Log);
     io.use(Auth);
 
-    io.on('connection', connection);
+    io.on('connection', connection(redis));
 
     redis.on("error", redisErrorHandler);
 
