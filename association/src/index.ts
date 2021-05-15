@@ -1,6 +1,7 @@
 import { createServer } from 'http';
 
 import "reflect-metadata";
+import { Connection, createConnection } from "typeorm";
 import * as express from 'express';
 import { json } from "express";
 import { createClient } from 'redis'
@@ -37,6 +38,10 @@ const redisClient = createClient({
 initConnection(socket, app, redisClient);
 
 // starting http server
-server.listen(process.env.PORT || 8000, () => {
-    console.log("server started.")
+createConnection()
+.then(async (_connection: Connection) => {
+    server.listen(process.env.PORT || 8000, () => {
+        console.log("server started.")
+    })
 })
+.catch((error) => {console.log(error)})
