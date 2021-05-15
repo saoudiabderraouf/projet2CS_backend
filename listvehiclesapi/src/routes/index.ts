@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllocatedVehicles,getAvailibleVehicles, get, getV,deleteVehicle, addState,getVehicles } from '../controllers/listVehicles';
+import { get, getV,deleteVehicle, addState,getVehicles } from '../controllers/listVehicles';
 
 const router = Router();
 
