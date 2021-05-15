@@ -1,8 +1,14 @@
+import { RedisClient } from 'redis';
 import { Socket } from 'socket.io';
-import { connect, openConnection } from '../controllers/initialize';
+import { connect, openConnection, disconnect } from '../controllers/initialize';
 
-export default function (socket: Socket) {
-    socket.on("connect", connect);
-
-    socket.on("open", openConnection);
+export default function (redis: RedisClient) {
+    
+    return (socket: Socket) => {
+        socket.on("connected vehicule", connect(redis));
+    
+        socket.on("demande vehicule", openConnection(redis));
+    
+        socket.on("disconnect", disconnect(redis));
+    } 
 }
