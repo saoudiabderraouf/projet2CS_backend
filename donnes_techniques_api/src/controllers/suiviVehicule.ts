@@ -76,9 +76,11 @@ export async function deleteVehicleState(req: Request, res: Response) {
 }
 //FIND
 export async function findVehicleState(req: Request, res: Response) {
-    const id= req.params.id_state
+    const id= Number(req.params.idVehicle)
     try {
-        const vehicle_state = await VehicleState.findOneOrFail(id)
+         //return rental active of a vehicle if exist 
+         const rental= await Rental.findOneOrFail({idVehicle:id,rentalstate:"active"})
+        const vehicle_state=await VehicleState.findOneOrFail({idRental:rental.idRental})
 
         return res.json(vehicle_state)
     } catch (error) {
@@ -93,12 +95,10 @@ export async function findVehicleRental(req: Request, res: Response) {
     try {
         //return rental active of a vehicle if exist 
         const rental= await Rental.findOneOrFail({idVehicle:id,rentalstate:"active"})
-        //return vehicle state using rental id 
-        const vehicle_State=await VehicleState.findOneOrFail({idRental:rental.idRental})
         //return tenant of vehicle 
         const tenant=await Tenant.findOneOrFail(rental.idTenant)
         const user=await User.findOneOrFail(tenant.idUser)
-       resultat=Object.assign(user,rental,vehicle_State)
+       resultat=Object.assign(user,rental)
         return res.status(500).json(resultat)
     } catch (error) {
         console.error()
