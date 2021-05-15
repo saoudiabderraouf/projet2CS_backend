@@ -1,18 +1,17 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-@Entity("Users")
-export class User extends BaseEntity {
+@Entity("Tenant")
+export class Vehicule extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    id: number;
+    idUser: number;
 
     @Column()
-    firstName: string;
+    accountState: string;
 
     @Column()
-    lastName: string;
+    longitude: number;
 
     @Column()
-    age: number;
-
+    latitude: number;
 }
