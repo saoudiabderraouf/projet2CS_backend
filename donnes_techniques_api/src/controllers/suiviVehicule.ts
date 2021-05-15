@@ -15,7 +15,6 @@ export const createVehicleState = async (req: Request, res: Response) => {
     const vehicle_state = VehicleState.create({
         idRental:req.body.idRental,
         idBorne :req.body.idBorne,
-        availability:req.body.availability,
         kilos:req.body.kilos,
         engineTemp :req.body.engineTemp,
         fuelLevel :req.body.fuelLevel,
@@ -44,7 +43,6 @@ export async function updateVehicleState(req: Request, res: Response) {
         const vehicle_state = await VehicleState.findOneOrFail(id)
         vehicle_state.idRental=req.body.idRental||vehicle_state.idRental,
         vehicle_state.idBorne =req.body.idBorne||vehicle_state.idBorne,
-        vehicle_state.availability=req.body.availability ||vehicle_state.availability,
         vehicle_state.kilos=req.body.kilos || vehicle_state.kilos,
         vehicle_state.engineTemp =req.body.engineTemp || vehicle_state.engineTemp,
         vehicle_state.fuelLevel =req.body.fuelLevel || vehicle_state.fuelLevel,
@@ -67,7 +65,10 @@ export async function deleteVehicleState(req: Request, res: Response) {
         const vehicle_state = await VehicleState.findOneOrFail(id)
     
         await vehicle_state.remove()
-        return res.json({message:"vehicle state deleted successful"})
+        return res.json(
+            {
+                message:"vehicle state deleted successful"
+            })
     } catch (error) {
         console.error()
         return res.status(500).json({error:"Something went wrong "})
@@ -76,11 +77,11 @@ export async function deleteVehicleState(req: Request, res: Response) {
 }
 //FIND
 export async function findVehicleState(req: Request, res: Response) {
-    const id= Number(req.params.idVehicle)
+    const id= Number(req.query.idVehicle)
     try {
          //return rental active of a vehicle if exist 
          const rental= await Rental.findOneOrFail({idVehicle:id,rentalstate:"active"})
-        const vehicle_state=await VehicleState.findOneOrFail({idRental:rental.idRental})
+         const vehicle_state=await VehicleState.findOneOrFail({idRental:rental.idRental})
 
         return res.json(vehicle_state)
     } catch (error) {
@@ -90,7 +91,7 @@ export async function findVehicleState(req: Request, res: Response) {
 }
 
 export async function findVehicleRental(req: Request, res: Response) {
-    const id= Number(req.params.idVehicle)
+    const id= Number(req.query.idVehicle)
     var resultat={}
     try {
         //return rental active of a vehicle if exist 
@@ -104,4 +105,4 @@ export async function findVehicleRental(req: Request, res: Response) {
         console.error()
         return res.status(500).json(error)
     }
-}
+}   
