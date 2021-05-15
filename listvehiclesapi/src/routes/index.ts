@@ -6,7 +6,6 @@ const router = Router();
 
 router.get('/', get);
 router.get('/vehicle', getV);
-//router.post('/vehicle', addVehicle);
 router.delete('/vehicle/:id', deleteVehicle);
 
 export default router;
