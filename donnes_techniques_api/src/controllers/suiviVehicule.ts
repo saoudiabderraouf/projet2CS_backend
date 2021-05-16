@@ -3,6 +3,8 @@ import {VehicleState} from "../entity/VehicleState";
 import {Rental,rental_status_enum} from "../entity/Rental";
 import {Tenant} from "../entity/Tenant";
 import { User } from "../entity/User";
+import { Borne } from "../entity/Borne";
+
 
 
 
@@ -26,7 +28,7 @@ export const createVehicleState = async (req: Request, res: Response) => {
 
     await vehicle_state.save()
     res.send(vehicle_state)
-    return res.status(201).json(vehicle_state)
+    return res.status(200).json(vehicle_state)
 }catch(err){
     console.error()
     return res.status(500).json(err)
@@ -39,9 +41,11 @@ export async function getVehicleState(_req: Request, res: Response) {
 }
 //UPDATE
 export async function updateVehicleState(req: Request, res: Response) {
-    const id= req.params.id_state
+    const id= Number(req.params.idVehicle)
     try {
-        const vehicle_state = await VehicleState.findOneOrFail(id)
+       // const vehicle_state = await VehicleState.findOneOrFail(id)
+        const rental= await Rental.findOneOrFail({idVehicle:id,rentalstate:"active"})
+        const vehicle_state=await VehicleState.findOneOrFail({idRental:rental.idRental})
         vehicle_state.idRental=req.body.idRental||vehicle_state.idRental,
         vehicle_state.idBorne =req.body.idBorne||vehicle_state.idBorne,
         vehicle_state.availability=req.body.availability ||vehicle_state.availability,
@@ -85,7 +89,7 @@ export async function findVehicleState(req: Request, res: Response) {
         return res.json(vehicle_state)
     } catch (error) {
         console.error()
-        return res.status(500).json({error:"Something went wrong "})
+        return res.status(500).json(error)
     }
 }
 
@@ -98,8 +102,9 @@ export async function findVehicleRental(req: Request, res: Response) {
         //return tenant of vehicle 
         const tenant=await Tenant.findOneOrFail(rental.idTenant)
         const user=await User.findOneOrFail(tenant.idUser)
-       resultat=Object.assign(user,rental)
-        return res.status(500).json(resultat)
+        const borne= await Borne.findOneOrFail(rental.iddepartborne)
+        resultat=Object.assign(user,rental,borne)
+        return res.status(200).json(resultat)
     } catch (error) {
         console.error()
         return res.status(500).json(error)
