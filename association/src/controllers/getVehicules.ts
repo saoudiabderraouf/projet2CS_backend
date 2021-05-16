@@ -5,7 +5,7 @@ export default function (redis: RedisClient | undefined) {
         return new Promise<string[]>((_, reject) => reject(["Please check the connection to redis."]));
 
     return new Promise<string[]>(function (resolve, reject) {
-        redis.smembers("connections", function(err, connections: string[]) {
+        redis.smembers("vehicules", function(err, connections: string[]) {
             if (err) {
                 reject([err.message]);
             }

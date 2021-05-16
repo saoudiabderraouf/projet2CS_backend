@@ -27,17 +27,21 @@ function measureDistance(lat1: number, lon1: number, lat2: number, lon2: number)
 export const connect = function (this: Socket, redis: RedisClient) {
     
     return async ({id}: VehiculeData) => {
-        let vehicule = await Vehicule.find({ where: { idVehicle: id }});
-
-        if (vehicule.length === 0) {
-            console.log("[association] connection error, cannot find vehicule of id " + id);
-            this.emit("error", { message: "Couldn't connect: Invalid id"});
-        } else {
-            let payload = {id, socketId: this.id};
-            console.log("connected vehicule of id: " + this.id);
-            redis.sadd("vehicules", JSON.stringify(payload));
-
-            this.emit("connected");
+        try {
+            let vehicule = await Vehicule.find({ where: { idVehicle: id }});
+    
+            if (vehicule.length === 0) {
+                console.log("[association] connection error, cannot find vehicule of id " + id);
+                this.emit("error", { message: "Couldn't connect: Invalid id"});
+            } else {
+                let payload = {id, socketId: this.id};
+                console.log("connected vehicule of id: " + this.id);
+                redis.sadd("vehicules", JSON.stringify(payload));
+    
+                this.emit("connected");
+            }
+        } catch (err) {
+            this.emit("error", { message: err.message })
         }
     }
 }
