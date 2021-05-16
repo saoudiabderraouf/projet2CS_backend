@@ -1,24 +1,26 @@
 version: '3.8'
 services:
-    template:
+    listvehiclesapi:
         build:
-            context: ./template
+            context: ./listvehiclesapi
             target: development
         volumes:
-            - ./template:/src
+            - ./listvehiclesapi:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
-            - "8000:8000"
+            - "8081:8000"
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-    donnes_techniques_api:
+<<<<<<< HEAD
+=======
+    VehicleTracking:
         build:
-            context: ./donnes_techniques_api
+            context: ./VehicleTracking
             target: development
         volumes:
-            - ./donnes_techniques_api:/src
+            - ./VehicleTracking:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
@@ -39,3 +41,4 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+>>>>>>> upstream/main

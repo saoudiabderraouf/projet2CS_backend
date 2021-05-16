@@ -1,0 +1,37 @@
+{
+   "type": "postgres",
+   "host": "",
+   "port": 5432,
+<<<<<<< HEAD:listvehiclesapi/ormconfig.json
+   "username": "tyghtxqhuptxxd",
+   "password": "257d1007c939f77f23d8a46356bd9c8f1b686b4fc9bff3cacc02c80bfaccc839",
+   "database": "d9b10av9a1ddhh",
+   "synchronize": false,
+=======
+   "username": "",
+   "password": "",
+   "database": "",
+   "synchronize": true,
+>>>>>>> upstream/main:template/ormconfig.json
+   "logging": false,
+   "ssl": true,
+   "extra": {
+      "ssl": {
+         "rejectUnauthorized": false
+      }
+   },
+   "entities": [
+      "src/entity/**/*.ts"
+   ],
+   "migrations": [
+      "src/migration/**/*.ts"
+   ],
+   "subscribers": [
+      "src/subscriber/**/*.ts"
+   ],
+   "cli": {
+      "entitiesDir": "src/entity",
+      "migrationsDir": "src/migration",
+      "subscribersDir": "src/subscriber"
+   }
+}
