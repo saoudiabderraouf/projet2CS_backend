@@ -10,9 +10,6 @@ export const get = (_req: Request, res: Response) => {
     res.end("Vehicles Service");
 }
 
-
-
-
 //get All vehicles
 export async function getVehicles(req: Request, res: Response) {
     
