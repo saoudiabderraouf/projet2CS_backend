@@ -3,7 +3,7 @@ import {VehicleState} from "../entity/VehicleState";
 import {Rental,rental_status_enum} from "../entity/Rental";
 import {Tenant} from "../entity/Tenant";
 import { User } from "../entity/User";
-
+import { Borne } from "../entity/Borne";
 
 
 export const get =  (_req: Request, res: Response) => {
@@ -113,8 +113,9 @@ export async function findVehicleRental(req: Request, res: Response) {
         //return tenant of vehicle 
         const tenant=await Tenant.findOneOrFail(rental.idTenant)
         const user=await User.findOneOrFail(tenant.idUser)
-       resultat=Object.assign(user,rental)
-        return res.status(500).json(resultat)
+        const borne= await Borne.findOneOrFail(rental.iddepartborne)
+        resultat=Object.assign(user,rental, borne)
+        return res.status(200).json(resultat)
     } catch (error) {
         console.error()
         return res.status(500).json(error)
