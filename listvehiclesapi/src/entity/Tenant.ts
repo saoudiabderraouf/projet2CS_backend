@@ -7,5 +7,5 @@ export class Tenant extends BaseEntity {
     idTenant: number;
 
     @Column()
-    idUser: number; 
+    iduser: number; 
 }

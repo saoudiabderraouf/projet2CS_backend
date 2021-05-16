@@ -14,20 +14,6 @@ services:
             NODE_ENV: development
             DEBUG: src:*
 
-    detectpanneapi:
-        build:
-            context: ./detectpanneapi
-            target: development
-        volumes:
-            - ./detectpanneapi:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8080:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-
     listvehiclesapi:
         build:
             context: ./listvehiclesapi

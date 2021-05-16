@@ -13,5 +13,9 @@ export class Rental extends BaseEntity {
     idVehicle: number;
 
     @Column()
-    rentalstate: string;
+    rentaldate: Date;
+
+    @Column()
+    plannedrestitutiondate: Date;
 }
+
