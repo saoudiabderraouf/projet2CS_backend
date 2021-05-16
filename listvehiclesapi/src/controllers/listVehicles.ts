@@ -13,8 +13,9 @@ export const get = (_req: Request, res: Response) => {
 //get All vehicles
 export async function getVehicles(req: Request, res: Response) {
     
-    const limit=Number(req.query.limit || "5")
+    const limit=Number(req.query.limit || "8")
     const page=Number(req.query.page || "0")
+    console.log(req.query);
 
     var vehicles:any = await getManager()
     .createQueryBuilder()
@@ -37,7 +38,7 @@ export async function getVehicles(req: Request, res: Response) {
             .from(Vehicle, "vehicle")
             .innerJoin(Rental, "rental", "vehicle.idVehicle=rental.idVehicle")
             .innerJoin(Tenant, "tenant", "rental.idTenant=tenant.idTenant")
-            .innerJoin(User, "user", "tenant.iduser=user.idUser")
+            .innerJoin(User, "user", "tenant.idUser=user.idUser")
             .getRawOne()
             vehicles[i]=toReturn
        }
@@ -45,7 +46,7 @@ export async function getVehicles(req: Request, res: Response) {
     let nbVehicles=await Vehicle.count()
     let nbPages=nbVehicles/limit
     res.status(200)
-    return res.send({
+    res.json({
         nbVehicles:nbVehicles,
         nbPages:nbPages,
         listVehicles:vehicles
