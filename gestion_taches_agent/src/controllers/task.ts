@@ -7,7 +7,7 @@ export const get =  (_req: Request, res: Response) => {
 }
 
 //Create 
-export const addTache = async (req: Request, res: Response) => {
+export const addTask = async (req: Request, res: Response) => {
     try{ 
         const task = Task.create({
             idAgent : req.body.idAgent,
@@ -26,7 +26,7 @@ export const addTache = async (req: Request, res: Response) => {
 }
 
 //Read 
-export async function getTaches(_req: Request, res: Response) {
+export async function getTasks(_req: Request, res: Response) {
     try{
         const Tasks = await Task.find();
         console.log(Tasks); 
@@ -38,7 +38,7 @@ export async function getTaches(_req: Request, res: Response) {
 }
 
 //Update
-export async function updateTache(req: Request, res: Response) {
+export async function updateTask(req: Request, res: Response) {
     const id = req.params.id;
     try {
         const task = await Task.findOneOrFail(id); 
@@ -57,7 +57,7 @@ export async function updateTache(req: Request, res: Response) {
 }
 
 //Delete
-export async function deleteTache(req: Request, res: Response) {
+export async function deleteTask(req: Request, res: Response) {
     const id = req.params.id; 
     try {
         const task = await Task.findOneOrFail(id);
@@ -71,7 +71,7 @@ export async function deleteTache(req: Request, res: Response) {
 }
 
 //Find one task by id
-export async function getTache(req: Request, res: Response) {
+export async function getTask(req: Request, res: Response) {
     const id = req.params.id; 
     try {
         const task = await Task.findOneOrFail(id);

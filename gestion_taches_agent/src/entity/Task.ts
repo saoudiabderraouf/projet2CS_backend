@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, OneToOne, JoinColumn, ManyToMany, JoinTable} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
 @Entity("Task")
 export class Task extends BaseEntity {
@@ -9,23 +9,16 @@ export class Task extends BaseEntity {
     @Column() 
     idAgent: number;
 
-    // @ManyToOne(() => Agent, agent => agent.idAgent) agent: Agent; 
-
     @Column()
-    // @OneToOne(() => Vehicle) 
-    // @JoinColumn() 
     idVehicle: number;
 
     @Column()
     description: string;
 
     @Column()
-    // @OneToOne(() => TaskState) 
-    // @JoinColumn() 
     idTaskState: number;
 
     @Column()
-    // @ManyToMany(() => Equipment) @JoinTable() 
     idEquipment: number;
 
 }
