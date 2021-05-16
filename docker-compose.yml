@@ -13,3 +13,29 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+    donnes_techniques_api:
+        build:
+            context: ./donnes_techniques_api
+            target: development
+        volumes:
+            - ./donnes_techniques_api:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8001:8001"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*    
+    utilisateur:
+        build:
+            context: ./utilisateur
+            target: development
+        volumes:
+            - ./utilisateur:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8100:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
