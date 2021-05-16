@@ -15,7 +15,7 @@ router.delete('/vehicle_State/:id_state', deleteVehicleState);
 //get vehicle state by idVehicle 
 router.get('/vehicle_state', findVehicleState);
 //get rebtal and tenant information by id vehicle 
-router.get('/vehicle_tracking', findVehicleRental);
+router.get('/rental_info', findVehicleRental);
 
 
 
