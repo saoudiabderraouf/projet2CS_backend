@@ -44,7 +44,7 @@ export async function getVehicles(req: Request, res: Response) {
        }
     }
     let nbVehicles=await Vehicle.count()
-    let nbPages=nbVehicles/limit
+    let nbPages=Math.round(nbVehicles/limit)
     res.status(200)
     res.json({
         nbVehicles:nbVehicles,
