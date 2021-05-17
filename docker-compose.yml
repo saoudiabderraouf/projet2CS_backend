@@ -13,8 +13,6 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-<<<<<<< HEAD
-=======
     VehicleTracking:
         build:
             context: ./VehicleTracking
@@ -41,4 +39,3 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
->>>>>>> upstream/main
