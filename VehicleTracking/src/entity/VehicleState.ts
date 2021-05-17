@@ -1,11 +1,4 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Double} from "typeorm";
-export enum Availability {
-    STOPPED = "stopped",
-    ALLOCATED = "allocated",
-    AVAILABLE = "available",
-    MAINTAINED = "maintained"
-
-}
 
 @Entity("VehicleState")
 export class VehicleState extends BaseEntity {
@@ -18,9 +11,6 @@ export class VehicleState extends BaseEntity {
 
     @Column()
     idBorne:number;
-
-    @Column()
-    availability:String;
 
     @Column()
     kilos:number;
