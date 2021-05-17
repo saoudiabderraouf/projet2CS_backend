@@ -1,3 +1,5 @@
+import * as dotenv from 'dotenv'
+dotenv.config()
 import { createServer } from 'http';
 
 import "reflect-metadata";
@@ -9,6 +11,7 @@ import * as cors from 'cors';
 import * as morgan from 'morgan';
 import { Server, ServerOptions } from 'socket.io'
 import initConnection from './routes'
+
 
 const app = express()
 
@@ -32,7 +35,7 @@ const options: Partial<ServerOptions> = {
 const socket = new Server(server, options);
 
 const redisClient = createClient({
-    url: "redis://127.0.0.1:6379"
+    url: `redis://${process.env.REDIS_SERVER}`
 });
 
 initConnection(socket, app, redisClient);
