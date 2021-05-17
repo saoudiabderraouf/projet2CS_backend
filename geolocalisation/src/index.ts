@@ -23,8 +23,8 @@ app.use(Router)
 var s;
 
 createConnection().then(async _connection => {   
-    s = app.listen(8000, () => {
-        console.log("geolocation service is up and running on port 8000!")
+    s = app.listen(8002, () => {
+        console.log("geolocation service is up and running on port 8002!")
     });
 
 }).catch(error => console.log(error));
