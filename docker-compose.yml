@@ -29,10 +29,10 @@ services:
             DEBUG: src:*    
     geolocalisation:
         build:
-            context: ./ServiceGeolocalisation
+            context: ./geolocalisation
             target: development
         volumes:
-            - ./ServiceGeolocalisation:/src
+            - ./geolocalisation:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
