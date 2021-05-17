@@ -7,20 +7,15 @@ export const getAdminTechnique =  (req: Request, res: Response) => {
 
     AdminTechnique.findOne({idAdminTechnique: parseInt(req.params.adminTechniqueId)})
     .then(adminTechnique => {
-        if(!adminTechnique) {
-            return res.status(404).send({
-                message: "AdminTechnique non trouvé id " + req.params.adminTechniqueId
-            });            
-        }
-        res.send(adminTechnique);
+        res.status(200).send(adminTechnique);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
-                message: "AdminTechnique not found with id " + req.params.adminTechniqueId
+                message: "AdminTechnique non trouvé"
             });                
         }
         return res.status(500).send({
-            message: "Erreur dans la récupération de l'AdminTechnique id " + req.params.adminTechniqueId
+            message: "Erreur Serveur"
         });
     });
 }
@@ -32,19 +27,19 @@ export const addAdminTechnique = async (req: Request, res: Response) => {
     })
 
     await adminTechnique.save()
-    res.send(adminTechnique)
+    res.status(200).send(adminTechnique)
 }
 
 export async function getAdminTechniques(_req: Request, res: Response) {
     const adminTechniques = await AdminTechnique.find();
-    res.json(adminTechniques)
+    res.status(200).json(adminTechniques)
 }
 
 export const updateAdminTechnique = async (req: Request, res: Response) => {
     
     if(!req.body.idUtilisateur && !req.body.adresse) {
         return res.status(400).send({
-            message: "AdminTechnique content ne doit pas étre vide"
+            message: "Champs vides"
         });
     }
 
@@ -53,12 +48,7 @@ export const updateAdminTechnique = async (req: Request, res: Response) => {
         adresse: req.body.adresse,
     })
     .then(adminTechnique => {
-        if(!adminTechnique) {
-            return res.status(404).send({
-                message: "AdminTechnique non trouvé id " + req.params.adminTechniqueId
-            });
-        }
-        res.send(adminTechnique);
+        res.status(200).send(adminTechnique);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -68,7 +58,7 @@ export const updateAdminTechnique = async (req: Request, res: Response) => {
         }
 
         return res.status(500).send({
-            message: "Erreur dans la modification de l'AdminTechnique id " + req.params.adminTechniqueId
+            message: "Erreur Serveur"
         });
     });
 
@@ -77,21 +67,16 @@ export const updateAdminTechnique = async (req: Request, res: Response) => {
 
 export const deleteAdminTechnique = async (req: Request, res: Response) => {
     AdminTechnique.delete({idAdminTechnique: parseInt(req.params.adminTechniqueId)})
-    .then(adminTechnique => {
-        if(!adminTechnique) {
-            return res.status(404).send({
-                message: "AdminTechnique non trouvé id " + req.params.adminTechniqueId
-            });
-        }
-        res.send({message: "AdminTechnique supprimé avec succés!"});
+    .then(() => {
+        res.status(200).send({message: "AdminTechnique supprimé avec succés!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
-                message: "AdminTechnique non trouvé id " + req.params.adminTechniqueId
+                message: "AdminTechnique non trouvé"
             });                
         }
         return res.status(500).send({
-            message: "Supression non effectuée id " + req.params.adminTechniqueId
+            message: "Erreur Serveur"
         });
     });
 }

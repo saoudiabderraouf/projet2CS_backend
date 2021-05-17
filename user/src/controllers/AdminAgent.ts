@@ -7,12 +7,9 @@ export const getAdminAgent =  (req: Request, res: Response) => {
 
     AdminAgent.findOne({idAdminAgent: parseInt(req.params.adminAgentId)})
     .then(adminAgent => {
-        if(!adminAgent) {
-            return res.status(404).send({
-                message: "AdminAgent non trouvé id " + req.params.utilisateurId
-            });            
-        }
-        res.send(adminAgent);
+
+        res.status(200).send(adminAgent);
+    
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -32,19 +29,19 @@ export const addAdminAgent = async (req: Request, res: Response) => {
     })
 
     await adminAgent.save()
-    res.send(adminAgent)
+    res.status(200).send(adminAgent)
 }
 
 export async function getAdminAgents(_req: Request, res: Response) {
     const adminAgents = await AdminAgent.find();
-    res.json(adminAgents)
+    res.status(200).json(adminAgents)
 }
 
 export const updateAdminAgent = async (req: Request, res: Response) => {
     
     if(!req.body.idUtilisateur && !req.body.adresse) {
         return res.status(400).send({
-            message: "AdminAgent content ne doit pas étre vide"
+            message: "Champs vides"
         });
     }
 
@@ -53,12 +50,9 @@ export const updateAdminAgent = async (req: Request, res: Response) => {
         adresse: req.body.adresse,
     })
     .then(adminAgent => {
-        if(!adminAgent) {
-            return res.status(404).send({
-                message: "AdminAgent non trouvé id " + req.params.adminAgentId
-            });
-        }
-        res.send(adminAgent);
+        
+        res.status(200).send(adminAgent);
+    
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -77,13 +71,10 @@ export const updateAdminAgent = async (req: Request, res: Response) => {
 
 export const deleteAdminAgent = async (req: Request, res: Response) => {
     AdminAgent.delete({idAdminAgent: parseInt(req.params.adminAgentId)})
-    .then(adminAgent => {
-        if(!adminAgent) {
-            return res.status(404).send({
-                message: "AdminAgent non trouvé id " + req.params.adminAgentId
-            });
-        }
-        res.send({message: "AdminAgent supprimé avec succés!"});
+    .then(() => {
+        
+        res.status(200).send({message: "AdminAgent supprimé avec succés!"});
+    
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
@@ -91,7 +82,7 @@ export const deleteAdminAgent = async (req: Request, res: Response) => {
             });                
         }
         return res.status(500).send({
-            message: "Supression non effectuée id " + req.params.adminAgentId
+            message: "Erreur serveur " + req.params.adminAgentId
         });
     });
 }

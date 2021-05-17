@@ -19,10 +19,16 @@ app.use(json())
 
 app.use(Router)
 
+var server;
+
 createConnection().then(async _connection => {   
-    app.listen(8000, () => {
+    server = app.listen(8000, () => {
         console.log("server started.")
-    })
+    });
+
+    console.log(server == null);
     
 
 }).catch(error => console.log(error));
+
+module.exports = server;
