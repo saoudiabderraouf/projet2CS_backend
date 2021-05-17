@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({
 app.use(Router)
 
 createConnection().then(async _connection => {   
-    app.listen(8000, () => {
-        console.log("geolocation service is up and running on port 8000!")
+    app.listen(8002, () => {
+        console.log("geolocation service is up and running on port 8002!")
     })
 
 }).catch(error => console.log(error));
