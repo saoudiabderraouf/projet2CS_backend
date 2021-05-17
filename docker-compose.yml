@@ -13,29 +13,18 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-    VehicleTracking:
+
+    gestion_taches_agent:
         build:
-            context: ./VehicleTracking
+            context: ./gestion_taches_agent
             target: development
         volumes:
-            - ./VehicleTracking:/src
+            - ./gestion_taches_agent:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
-            - "8001:8001"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*    
-    utilisateur:
-        build:
-            context: ./utilisateur
-            target: development
-        volumes:
-            - ./utilisateur:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8100:8000"
+            - "8001:8000"
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+
