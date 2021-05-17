@@ -15,10 +15,10 @@ services:
             DEBUG: src:*
     vehicleTracking:
         build:
-            context: ./VehicleTracking
+            context: ./vehicleTracking
             target: development
         volumes:
-            - ./VehicleTracking:/src
+            - ./vehicleTracking:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
