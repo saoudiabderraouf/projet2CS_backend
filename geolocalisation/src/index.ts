@@ -1,11 +1,11 @@
 import "reflect-metadata";
 import {createConnection} from "typeorm";
 
-import * as express from 'express';
+import express = require('express');
 import { Request, Response, json } from "express";
-import * as cors from 'cors';
-import * as morgan from 'morgan';
-import Router from './routes/'
+import cors = require('cors');
+import morgan = require ('morgan');
+import Router from './routes';
 
 const app = express()
 
@@ -20,9 +20,14 @@ app.use(bodyParser.urlencoded({
 
 app.use(Router)
 
+var s;
+
 createConnection().then(async _connection => {   
-    app.listen(8002, () => {
+    s = app.listen(8002, () => {
         console.log("geolocation service is up and running on port 8002!")
-    })
+    });
 
 }).catch(error => console.log(error));
+
+export const server = s;
+export default app;
