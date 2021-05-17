@@ -51,7 +51,7 @@ describe("user api test", () => {
                 lastName: "testUpdateLastName",
                 address: "testUpdateAddress",
                 phoneNumber: "testUpdatePhoneNumber"
-            }, (error, response, body) {
+            }, (error, response, body) => {
                 status = response.status; 
             });
 
