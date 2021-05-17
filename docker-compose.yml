@@ -20,6 +20,19 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+    log:
+        build:
+            context: ./log
+            target: development
+        volumes:
+            - ./log:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8003:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
     vehicletracking:
         build:
             context: ./VehicleTracking
