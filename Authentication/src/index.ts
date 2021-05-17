@@ -15,10 +15,6 @@ class Server {
     this.app = express(); // init the application
     this.configuration();
     this.routes();
-
-    this.app.use(json());
-    this.app.use(cors());
-    this.app.use(morgan("dev"));
   }
 
   /**
@@ -34,6 +30,10 @@ class Server {
    * Method to configure the routes
    */
   public routes() {
+    this.app.use(json());
+    this.app.use(cors());
+    this.app.use(morgan("dev"));
+
     this.authenticationRoutes = new AuthenticationRoutes();
     this.app.use(`/`, this.authenticationRoutes.router); // Configure the new routes of the controller user
   }

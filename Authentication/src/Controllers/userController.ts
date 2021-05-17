@@ -1,4 +1,4 @@
-import { Router, Request, Response } from "express";
+import { Request, Response } from "express";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
@@ -10,7 +10,7 @@ export class UserController {
       const user = await User.create({
         email: _req.body.email,
         password: _req.body.password,
-        role: _req.body.role,
+        idUser: _req.body.idUser,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -20,7 +20,7 @@ export class UserController {
 
       const payload = {
         user: {
-          id: user.id,
+          id: user.idAuthUser,
         },
       };
 
@@ -63,7 +63,7 @@ export class UserController {
 
       const payload = {
         user: {
-          id: user.id,
+          id: user.idAuthUser,
         },
       };
 
@@ -94,15 +94,14 @@ export class UserController {
   };
 
   public update = async (_req: Request, res: Response) => {
-    const uuid = _req.params.uuid;
-    const { email, password, role } = _req.body;
+    const idUser = parseInt(_req.params.uuid);
+    const { email, password } = _req.body;
 
     try {
-      const user = await User.findOneOrFail({ uuid });
+      const user = await User.findOneOrFail({ idUser });
 
       user.email = email || user.email;
       user.password = password || user.password;
-      user.role = role || user.role;
 
       await user.save();
 
@@ -116,10 +115,10 @@ export class UserController {
   };
 
   public delete = async (_req: Request, res: Response) => {
-    const uuid = _req.params.uuid;
+    const idUser = parseInt(_req.params.uuid);
 
     try {
-      const user = await User.findOneOrFail({ uuid });
+      const user = await User.findOneOrFail({ idUser });
 
       await user.remove();
 
