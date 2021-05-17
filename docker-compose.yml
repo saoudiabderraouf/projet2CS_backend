@@ -1,5 +1,6 @@
 version: '3.8'
 services:
+#Services du Volet Surveillance 
     listvehiclesapi:
         build:
             context: ./listvehiclesapi
@@ -13,7 +14,7 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-    vehicleTracking:
+    vehicletracking:
         build:
             context: ./vehicletracking
             target: development
@@ -26,16 +27,17 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*    
-    utilisateur:
+    servicegeolocalisation:
         build:
-            context: ./utilisateur
+            context: ./servicegeolocalisation
             target: development
         volumes:
-            - ./utilisateur:/src
+            - ./servicegeolocalisation::/src
             - /src/node_modules
         command: npm run start:dev
         ports:
-            - "8100:8000"
+            - "8001:8001"
         environment: 
             NODE_ENV: development
-            DEBUG: src:*
+            DEBUG: src:*   
+        
