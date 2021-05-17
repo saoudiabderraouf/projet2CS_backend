@@ -13,7 +13,7 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-    VehicleTracking:
+    vehicleTracking:
         build:
             context: ./VehicleTracking
             target: development
