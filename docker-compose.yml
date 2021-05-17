@@ -32,7 +32,7 @@ services:
             context: ./geolocalisation
             target: development
         volumes:
-            - ./geolocalisation::/src
+            - ./geolocalisation:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
