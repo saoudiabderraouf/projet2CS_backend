@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import {getManager} from "typeorm";
 import { read } from "node:fs";
 import {Task} from "../entity/Task";
 
@@ -72,7 +73,7 @@ export async function deleteTask(req: Request, res: Response) {
 
 //Find one task by id
 export async function getTask(req: Request, res: Response) {
-    const id = req.params.id; 
+    const id =req.params.id; 
     try {
         const task = await Task.findOneOrFail(id);
         return res.json(task); 
@@ -81,5 +82,22 @@ export async function getTask(req: Request, res: Response) {
         return res.json({ message: 'Tâche introuvable' }); 
     }
     
+}
+
+//Find all the tasks of an Agent 
+export async function getTaskByAgentId(req: Request, res: Response) {
+    const id =  req.query.id; 
+    // console.log('paramatre id = ', id); 
+    try{
+        const tasks = await getManager()
+        .createQueryBuilder(Task, "task")
+        .where("task.idAgent = :id", { id: id })
+        .getMany(); 
+
+    return res.send(tasks); 
+    } catch(err){
+        console.log(err); 
+        return res.status(500).json(err);
+    }
 }
 

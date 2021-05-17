@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {createConnection} from "typeorm";
+import {createConnection, Connection} from "typeorm";
 
 import * as express from 'express';
 import { Request, Response, json } from "express";
@@ -16,9 +16,19 @@ app.use(morgan("dev"))
 app.use(Router)
 
 createConnection().then(async _connection => {   
-    app.listen(8000, () => {
-        console.log("server started.")
-    })
-    
+    const server = app.listen(8000, () => {
+        console.log("server started. 🚀")
+    }); 
+    module.exports = server; 
 
 }).catch(error => console.log(error));
+
+
+
+// createConnection();
+
+// const server = app.listen(8000, () => {
+//   console.log("Server Started. 🚀");
+// });
+
+// module.exports = server;

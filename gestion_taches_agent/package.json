@@ -27,6 +27,6 @@
       "start": "ts-node src/index.ts",
       "build": "tsc -p .",
       "start:dev": "nodemon --exec ts-node src/index.ts",
-      "test": "jasmine-ts \"spec/*.spec.ts\""
+      "test": "jasmine-ts \"spec/*.ts\""
    }
 }
