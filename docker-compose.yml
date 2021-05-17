@@ -1,18 +1,18 @@
 version: '3.8'
+
 services:
     redis:
         image: "redis:alpine"
         ports:
             - 6379:6379
-    
         environment:
             - ALLOW_EMPTY_PASSWORD=yes
-    template:
+    vehicles:
         build:
-            context: ./template
+            context: ./vehicles
             target: development
         volumes:
-            - ./template:/src
+            - ./vehicles:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
@@ -20,6 +20,7 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+<<<<<<< HEAD
     user:
         build:
             context: ./user
@@ -34,30 +35,22 @@ services:
             NODE_ENV: development
             DEBUG: src:*
     log:
+=======
+            
+    tracking:        
+>>>>>>> eac0c301ee2196afd53bfd2f70b30ec9b56db755
         build:
-            context: ./log
+            context: ./tracking
             target: development
         volumes:
-            - ./log:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8003:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    vehicletracking:
-        build:
-            context: ./VehicleTracking
-            target: development
-        volumes:
-            - ./VehicleTracking:/src
+            - ./tracking:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
             - "8001:8001"
         environment: 
             NODE_ENV: development
+<<<<<<< HEAD
             DEBUG: src:*    
     borne-vehicule:
         build:
@@ -69,6 +62,20 @@ services:
         command: npm run start:dev
         ports:
             - "8200:8000"
+=======
+            DEBUG: src:*  
+
+    geolocalisation:
+        build:
+            context: ./geolocalisation
+            target: development
+        volumes:
+            - ./geolocalisation:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8002:8002"
+>>>>>>> eac0c301ee2196afd53bfd2f70b30ec9b56db755
         environment: 
             NODE_ENV: development
             DEBUG: src:*
