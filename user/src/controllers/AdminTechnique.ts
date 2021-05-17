@@ -7,7 +7,7 @@ export const getAdminTechnique =  (req: Request, res: Response) => {
 
     AdminTechnique.findOne({idAdminTechnique: parseInt(req.params.adminTechniqueId)})
     .then(adminTechnique => {
-        res.send(adminTechnique);
+        res.status(200).send(adminTechnique);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -27,12 +27,12 @@ export const addAdminTechnique = async (req: Request, res: Response) => {
     })
 
     await adminTechnique.save()
-    res.send(adminTechnique)
+    res.status(200).send(adminTechnique)
 }
 
 export async function getAdminTechniques(_req: Request, res: Response) {
     const adminTechniques = await AdminTechnique.find();
-    res.json(adminTechniques)
+    res.status(200).json(adminTechniques)
 }
 
 export const updateAdminTechnique = async (req: Request, res: Response) => {
@@ -48,7 +48,7 @@ export const updateAdminTechnique = async (req: Request, res: Response) => {
         adresse: req.body.adresse,
     })
     .then(adminTechnique => {
-        res.send(adminTechnique);
+        res.status(200).send(adminTechnique);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -68,7 +68,7 @@ export const updateAdminTechnique = async (req: Request, res: Response) => {
 export const deleteAdminTechnique = async (req: Request, res: Response) => {
     AdminTechnique.delete({idAdminTechnique: parseInt(req.params.adminTechniqueId)})
     .then(() => {
-        res.send({message: "AdminTechnique supprimé avec succés!"});
+        res.status(200).send({message: "AdminTechnique supprimé avec succés!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

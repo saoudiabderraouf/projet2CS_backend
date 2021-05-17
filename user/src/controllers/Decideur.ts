@@ -7,7 +7,7 @@ export const getDecideur =  (req: Request, res: Response) => {
 
     Decideur.findOne({idDecideur: parseInt(req.params.decideurId)})
     .then(decideur => {
-        res.send(decideur);
+        res.status(200).send(decideur);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -27,12 +27,12 @@ export const addDecideur = async (req: Request, res: Response) => {
     })
 
     await decideur.save()
-    res.send(decideur)
+    res.status(200).send(decideur)
 }
 
 export async function getDecideurs(_req: Request, res: Response) {
     const decideurs = await Decideur.find();
-    res.json(decideurs)
+    res.status(200).json(decideurs)
 }
 
 export const updateDecideur = async (req: Request, res: Response) => {
@@ -48,7 +48,7 @@ export const updateDecideur = async (req: Request, res: Response) => {
         adresse: req.body.adresse,
     })
     .then(decideur => {
-        res.send(decideur);
+        res.status(200).send(decideur);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -68,7 +68,7 @@ export const updateDecideur = async (req: Request, res: Response) => {
 export const deleteDecideur = async (req: Request, res: Response) => {
     Decideur.delete({idDecideur: parseInt(req.params.decideurId)})
     .then(() => {
-        res.send({message: "Decideur supprimé avec succés!"});
+        res.status(200).send({message: "Decideur supprimé avec succés!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

@@ -35,7 +35,7 @@ export const addUtilisateur = async (req: Request, res: Response) => {
 
 export async function getUtilisateurs(_req: Request, res: Response) {
     const utilisateurs = await User.find();
-    res.json(utilisateurs)
+    res.status(200).json(utilisateurs)
 }
 
 export const updateUtilisateur = async (req: Request, res: Response) => {

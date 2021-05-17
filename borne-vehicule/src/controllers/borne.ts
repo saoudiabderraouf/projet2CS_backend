@@ -7,7 +7,7 @@ export const getBorne =  (req: Request, res: Response) => {
 
     Borne.findOne({idBorne: parseInt(req.params.idBorne)})
     .then(borne => {
-        res.send(borne);
+        res.status(200).send(borne);
     }).catch(() => {
         res.status(500).send({
             message: "Erreur Serveur"
@@ -26,12 +26,12 @@ export const addBorne = async (req: Request, res: Response) => {
     })
 
     await borne.save()
-    res.send(borne)
+    res.status(200).send(borne)
 }
 
 export async function getBornes(_req: Request, res: Response) {
     const bornes = await Borne.find();
-    res.json(bornes)
+    res.send(200).json(bornes)
 }
 
 export const updateBorne = async (req: Request, res: Response) => {
@@ -51,7 +51,7 @@ export const updateBorne = async (req: Request, res: Response) => {
         city: req.body.wilaya
     })
     .then(borne => {
-        return res.send(borne);
+        return res.status(200).send(borne);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -72,7 +72,7 @@ export const updateBorne = async (req: Request, res: Response) => {
 export const deleteBorne = async (req: Request, res: Response) => {
     Borne.delete({idBorne: parseInt(req.params.idBorne)})
     .then(() => {
-        return res.send({message: "Borne supprimée avec succés!"});
+        return res.status(200).send({message: "Borne supprimée avec succés!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

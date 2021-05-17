@@ -24,7 +24,9 @@ var server;
 createConnection().then(async _connection => {   
     server = app.listen(8000, () => {
         console.log("server started.")
-    })
+    });
+
+    console.log(server == null);
     
 
 }).catch(error => console.log(error));

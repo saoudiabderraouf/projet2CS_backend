@@ -8,7 +8,7 @@ export const getAdminAgent =  (req: Request, res: Response) => {
     AdminAgent.findOne({idAdminAgent: parseInt(req.params.adminAgentId)})
     .then(adminAgent => {
 
-        res.send(adminAgent);
+        res.status(200).send(adminAgent);
     
     }).catch(err => {
         if(err.kind === 'ObjectId') {
@@ -29,12 +29,12 @@ export const addAdminAgent = async (req: Request, res: Response) => {
     })
 
     await adminAgent.save()
-    res.send(adminAgent)
+    res.status(200).send(adminAgent)
 }
 
 export async function getAdminAgents(_req: Request, res: Response) {
     const adminAgents = await AdminAgent.find();
-    res.json(adminAgents)
+    res.status(200).json(adminAgents)
 }
 
 export const updateAdminAgent = async (req: Request, res: Response) => {
@@ -51,7 +51,7 @@ export const updateAdminAgent = async (req: Request, res: Response) => {
     })
     .then(adminAgent => {
         
-        res.send(adminAgent);
+        res.status(200).send(adminAgent);
     
     }).catch(err => {
 
@@ -73,7 +73,7 @@ export const deleteAdminAgent = async (req: Request, res: Response) => {
     AdminAgent.delete({idAdminAgent: parseInt(req.params.adminAgentId)})
     .then(() => {
         
-        res.send({message: "AdminAgent supprimé avec succés!"});
+        res.status(200).send({message: "AdminAgent supprimé avec succés!"});
     
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {

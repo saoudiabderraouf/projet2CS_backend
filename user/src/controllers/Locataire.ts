@@ -7,7 +7,7 @@ export const getLocataire =  (req: Request, res: Response) => {
 
     Locataire.findOne({idLocataire: parseInt(req.params.locataireId)})
     .then(locataire => {
-        res.send(locataire);
+        res.status(200).send(locataire);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -32,12 +32,12 @@ export const addLocataire = async (req: Request, res: Response) => {
     })
 
     await locataire.save()
-    res.send(locataire)
+    res.status(200).send(locataire)
 }
 
 export async function getLocataires(_req: Request, res: Response) {
     const locataires = await Locataire.find();
-    res.json(locataires)
+    res.status(200).json(locataires)
 }
 
 export const updateLocataire = async (req: Request, res: Response) => {
@@ -58,7 +58,7 @@ export const updateLocataire = async (req: Request, res: Response) => {
         idTypeAbonnement: req.body.idTypeAbonnement,
     })
     .then(locataire => {
-        res.send(locataire);
+        res.status(200).send(locataire);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -78,7 +78,7 @@ export const updateLocataire = async (req: Request, res: Response) => {
 export const deleteLocataire = async (req: Request, res: Response) => {
     Locataire.delete({idLocataire: parseInt(req.params.locataireId)})
     .then(() => {
-        res.send({message: "Locataire supprimé avec succés!"});
+        res.status(200).send({message: "Locataire supprimé avec succés!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

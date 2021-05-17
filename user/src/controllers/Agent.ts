@@ -7,7 +7,7 @@ export const getAgent =  (req: Request, res: Response) => {
 
     Agent.findOne({idAgent: parseInt(req.params.agentId)})
     .then(agent => {
-        res.send(agent);
+        res.status(200).send(agent);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -30,12 +30,12 @@ export const addAgent = async (req: Request, res: Response) => {
     })
 
     await agent.save()
-    res.send(agent)
+    res.status(200).send(agent)
 }
 
 export async function getAgents(_req: Request, res: Response) {
     const agents = await Agent.find();
-    res.json(agents)
+    res.status(200).json(agents)
 }
 
 export const updateAgent = async (req: Request, res: Response) => {
@@ -54,7 +54,7 @@ export const updateAgent = async (req: Request, res: Response) => {
         photo: req.body.photo,
     })
     .then(agent => {
-        res.send(agent);
+        res.status(200).send(agent);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -74,7 +74,7 @@ export const updateAgent = async (req: Request, res: Response) => {
 export const deleteAgent = async (req: Request, res: Response) => {
     Agent.delete({idAgent: parseInt(req.params.agentId)})
     .then(() => {
-        res.send({message: "Agent supprimé avec succés"});
+        res.status(200).send({message: "Agent supprimé avec succés"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

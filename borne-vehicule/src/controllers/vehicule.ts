@@ -6,7 +6,7 @@ export const getVehicule =  (req: Request, res: Response) => {
 
     Vehicule.findOne({idVehicle: parseInt(req.params.idVehicule)})
     .then((vehicule: any) => {
-        res.send(vehicule);
+        res.status(200).send(vehicule);
     }).catch(() => {
         res.status(500).send({
             message: "Erreur Serveur"
@@ -27,12 +27,12 @@ export const addVehicule = async (req: Request, res: Response) => {
     })
 
     await vehicule.save()
-    res.send(vehicule)
+    res.status(200).send(vehicule)
 }
 
 export async function getVehicules(_req: Request, res: Response) {
     const vehicules = await Vehicule.find();
-    res.json(vehicules)
+    res.status(200).json(vehicules)
 }
 
 export const updateVehicule = async (req: Request, res: Response) => {
@@ -53,7 +53,7 @@ export const updateVehicule = async (req: Request, res: Response) => {
         image: req.body.image
     })
     .then((vehicule: any) => {
-        return res.send(vehicule);
+        return res.status(200).send(vehicule);
     }).catch((err: { kind: string; }) => {
 
         if(err.kind === 'ObjectId') {
@@ -74,7 +74,7 @@ export const updateVehicule = async (req: Request, res: Response) => {
 export const deleteVehicule = async (req: Request, res: Response) => {
     Vehicule.delete({idVehicle: parseInt(req.params.idVehicule)})
     .then(() => {
-        return res.send({message: "Vehicule supprimée avec succés!"});
+        return res.status(200).send({message: "Vehicule supprimée avec succés!"});
     }).catch((err: { kind: string; name: string; }) => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

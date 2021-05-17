@@ -7,7 +7,7 @@ export const getAdminCompte =  (req: Request, res: Response) => {
 
     AdminCompte.findOne({idAdminCompte: parseInt(req.params.adminCompteId)})
     .then(adminCompte => {
-        res.send(adminCompte);
+        res.status(200).send(adminCompte);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -27,12 +27,12 @@ export const addAdminCompte = async (req: Request, res: Response) => {
     })
 
     await adminCompte.save()
-    res.send(adminCompte)
+    res.status(200).send(adminCompte)
 }
 
 export async function getAdminComptes(_req: Request, res: Response) {
     const adminComptes = await AdminCompte.find();
-    res.json(adminComptes)
+    res.status(200).json(adminComptes)
 }
 
 export const updateAdminCompte = async (req: Request, res: Response) => {
@@ -42,7 +42,7 @@ export const updateAdminCompte = async (req: Request, res: Response) => {
         adresse: req.body.adresse,
     })
     .then(adminCompte => {
-        res.send(adminCompte);
+        res.status(200).send(adminCompte);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -62,7 +62,7 @@ export const updateAdminCompte = async (req: Request, res: Response) => {
 export const deleteAdminCompte = async (req: Request, res: Response) => {
     AdminCompte.delete({idAdminCompte: parseInt(req.params.adminCompteId)})
     .then(() => {
-        res.send({message: "AdminCompte supprimé avec succés!"});
+        res.status(200).send({message: "AdminCompte supprimé avec succés!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({

@@ -7,7 +7,7 @@ export const getTypeUtilisateur =  (req: Request, res: Response) => {
 
     TypeUtilisateur.findOne({idTypeUtilisateur: parseInt(req.params.typeUtilisateurId)})
     .then(typeUtilisateur => {
-        res.send(typeUtilisateur);
+        res.status(200).send(typeUtilisateur);
     }).catch(err => {
         if(err.kind === 'ObjectId') {
             return res.status(404).send({
@@ -26,12 +26,12 @@ export const addTypeUtilisateur = async (req: Request, res: Response) => {
     })
 
     await typeUtilisateur.save()
-    res.send(typeUtilisateur)
+    res.status(200).send(typeUtilisateur)
 }
 
 export async function getTypeUtilisateurs(_req: Request, res: Response) {
     const typeUtilisateurs = await TypeUtilisateur.find();
-    res.json(typeUtilisateurs)
+    res.status(200).json(typeUtilisateurs)
 }
 
 export const updateTypeUtilisateur = async (req: Request, res: Response) => {
@@ -46,7 +46,7 @@ export const updateTypeUtilisateur = async (req: Request, res: Response) => {
         type: req.body.type,
     })
     .then(typeUtilisateur => {
-        res.send(typeUtilisateur);
+        res.status(200).send(typeUtilisateur);
     }).catch(err => {
 
         if(err.kind === 'ObjectId') {
@@ -66,7 +66,7 @@ export const updateTypeUtilisateur = async (req: Request, res: Response) => {
 export const deleteTypeUtilisateur = async (req: Request, res: Response) => {
     TypeUtilisateur.delete({idTypeUtilisateur: parseInt(req.params.typeUtilisateurId)})
     .then(() => {
-        res.send({message: "TypeUtilisateur supprimé avec succés!"});
+        res.status(200).send({message: "TypeUtilisateur supprimé avec succés!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
             return res.status(404).send({
