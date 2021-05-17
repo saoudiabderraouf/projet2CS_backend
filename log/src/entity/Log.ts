@@ -14,7 +14,7 @@ export class Log extends BaseEntity {
     @Column()
     details: string;
 
-    @ManyToOne(() => Application)
+    @ManyToOne(() => Application, {onDelete: 'CASCADE', onUpdate: 'CASCADE' })
     @JoinColumn()
     idApp : Application;
 
