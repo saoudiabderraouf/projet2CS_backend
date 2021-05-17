@@ -35,7 +35,7 @@ export const connect = function (this: Socket, redis: RedisClient) {
                 this.emit("error", { message: "Couldn't connect: Invalid id"});
             } else {
                 let payload = {id, socketId: this.id};
-                console.log("connected vehicule of id: " + this.id);
+                console.log("connected vehicule of id: " + id + " using socketId: " + this.id);
                 redis.sadd("vehicules", JSON.stringify(payload));
     
                 this.emit("connected");
