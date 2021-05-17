@@ -8,7 +8,7 @@ router.get('/', get);
 //etat de vehicule 
 
 router.post('/vehicle_State', createVehicleState);
-router.put('/vehicle_State/:id_state', updateVehicleState);
+router.put('/vehicle_State/:idVehicle', updateVehicleState);
 router.delete('/vehicle_State/:id_state', deleteVehicleState);
 
 
