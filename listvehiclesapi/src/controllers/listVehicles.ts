@@ -35,6 +35,7 @@ export async function getVehicles(req: Request, res: Response) {
             .addSelect("user.lastName as lastname")
             .addSelect("rental.rentaldate as rentalDate ")
             .addSelect("rental.plannedrestitutiondate as availibleDate ")
+            .addSelect("rental.idRental as idRental ")
             .from(Vehicle, "vehicle")
             .innerJoin(Rental, "rental", "vehicle.idVehicle=rental.idVehicle")
             .innerJoin(Tenant, "tenant", "rental.idTenant=tenant.idTenant")
