@@ -25,7 +25,7 @@ export const createVehicleState = async (req: Request, res: Response) => {
 
     await vehicle_state.save()
     res.send(vehicle_state)
-    return res.status(201).json(vehicle_state)
+    return res.status(200).json(vehicle_state)
 }catch(err){
     console.error()
     return res.status(500).json(err)
@@ -45,9 +45,11 @@ export async function getVehicleState(_req: Request, res: Response) {
 
 //UPDATE
 export async function updateVehicleState(req: Request, res: Response) {
-    const id= req.params.id_state
+    const id= Number(req.params.idVehicle)
     try {
-        const vehicle_state = await VehicleState.findOneOrFail(id)
+       // const vehicle_state = await VehicleState.findOneOrFail(id)
+        const rental= await Rental.findOneOrFail({idVehicle:id,rentalstate:"active"})
+        const vehicle_state=await VehicleState.findOneOrFail({idRental:rental.idRental})
         vehicle_state.idRental=req.body.idRental||vehicle_state.idRental,
         vehicle_state.idBorne =req.body.idBorne||vehicle_state.idBorne,
         vehicle_state.kilos=req.body.kilos || vehicle_state.kilos,
@@ -100,7 +102,7 @@ export async function findVehicleState(req: Request, res: Response) {
         return res.json(vehicle_state)
     } catch (error) {
         console.error()
-        return res.status(500).json({error:"Something went wrong "})
+        return res.status(500).json(error)
     }
 }
 
