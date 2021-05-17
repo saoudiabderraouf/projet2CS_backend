@@ -39,5 +39,4 @@ services:
             - "8002:8000"
         environment: 
             NODE_ENV: development
-            DEBUG: src:*   
-        
+            DEBUG: src:*    
