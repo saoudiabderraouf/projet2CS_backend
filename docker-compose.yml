@@ -13,16 +13,42 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-    utilisateur:
+    user:
         build:
-            context: ./utilisateur
+            context: ./user
             target: development
         volumes:
-            - ./utilisateur:/src
+            - ./user:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
             - "8100:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    borne:
+        build:
+            context: ./borne
+            target: development
+        volumes:
+            - ./borne:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8200:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+    vehicule:
+        build:
+            context: ./vehicule
+            target: development
+        volumes:
+            - ./vehicule:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8300:8000"
         environment: 
             NODE_ENV: development
             DEBUG: src:*
