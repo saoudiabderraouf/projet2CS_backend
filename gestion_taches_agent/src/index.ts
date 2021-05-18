@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {createConnection, Connection} from "typeorm";
+import {createConnection, Connection, SimpleConsoleLogger} from "typeorm";
 
 import * as express from 'express';
 import { Request, Response, json } from "express";

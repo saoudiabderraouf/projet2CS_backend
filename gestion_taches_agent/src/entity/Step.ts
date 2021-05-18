@@ -10,7 +10,10 @@ export class Step extends BaseEntity {
     // @Column() 
     // idTask: number;
 
-    @ManyToOne(() => Task, task => task.steps)
+    @ManyToOne(() => Task, task => task.steps, {
+        onDelete: 'CASCADE', 
+        onUpdate: 'CASCADE'
+    })
     task: Task;
 
     @Column()
