@@ -29,6 +29,7 @@
     "build": "tsc -p .",
     "start:dev": "ts-node src/index.ts",
     "test": "jasmine",
-    "pretest": "rm -rf ./build && tsc"
+    "pretest": "rm -rf ./build && tsc",
+    "doc": "rm -rf ./docs && npx typedoc --out docs src && google-chrome ./docs/index.html"
   }
 }
