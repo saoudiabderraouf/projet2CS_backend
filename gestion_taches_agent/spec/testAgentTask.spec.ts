@@ -1,143 +1,122 @@
-import { Request, json } from "express";
-import { Server } from "http";
-import * as express from 'express';
+const request = require("supertest");
 
 interface IData {
-    status?: number;
-    body?: string;
+  status?: number;
+  body?: string | any;
 }
-const app = express()
 
-let Request = require("request");
-    
 describe("Service Test : ", () => {
-    // let service: Server;
-    // beforeAll(() => {
-    //     service = require("../src/index");
-    //     console.log("sssssssssssssssssss", service); 
-    // });
-    // afterAll(() => {
-    //     service.close();
-    // }); /*  */
-
-    describe("GET /", () => {
+  describe("Endpoint : /", () => {
     let data: IData = {};
-    beforeAll((done) => {
-        Request.get(
-            "http://localhost:8000",(_error: any, response: any, body: any) => {
-              data.status = response.statusCode;
-              data.body = body;
-              console.log("GET / http://localhost:8000 : data.status = ", data.status);
-              done();
-            }
-        );
-        
+
+    it("Returns welcome body successfully", (done) => {
+      request("http://localhost:8000")
+        .get("/")
+        .expect(200)
+        .end((err: Error, res: Response) => {
+          if (err) {
+            console.log(err);
+          }
+          const resultData = res.text;
+          const expectedData =
+            "Hello, this is the agent Tasks' management service.";
+          expect(resultData).toEqual(expectedData);
+          done();
+        });
     });
-    it("Status 200", () => {
-        expect(data.status).toBe(200);
+  });
+
+  describe("Endpoint : /task", () => {
+    let data: IData = {};
+
+    it("Returns all tasks successfully", (done) => {
+      request("http://localhost:8000")
+        .get("/task")
+        .expect(200)
+        .end((err: Error, res: any) => {
+          if (err) {
+            console.log(err);
+          }
+          const resultData = JSON.parse(res.text);
+          expect(resultData.length).toBeGreaterThan(0);
+          done();
         });
     });
 
-    describe("GET /task", () => {
-      let data: IData = {};
-      beforeAll((done) => {
-          Request.get(
-              "http://localhost:8000/task",(_error: any, response: any, body: any) => {
-                data.status = response.statusCode;
-                data.body = body;
-                console.log("GET / http://localhost:8000/task : data.status = ", data.status);
-                done();
+    it("Returns task id=8 successfully", (done) => {
+      request("http://localhost:8000")
+        .get("/task/8")
+        .expect(200)
+        .end((err: Error, res: any) => {
+          if (err) {
+            console.log(err);
+          }
+          const resultData = JSON.parse(res.text);
+          const expectedData = {
+            idTask: 8,
+            idAgent: 2,
+            idVehicle: 1,
+            description: "maintenance task :))",
+            idTaskState: 1,
+            idEquipment: 1,
+          };
+          expect(resultData).toEqual(expectedData);
+          done();
+        });
+    });
+
+    it("Adds & delete a task successfully", (done) => {
+      const taskAdded = {
+        idAgent: 100,
+        idVehicle: 1,
+        description: "Another task ajoutée par les tests",
+        idTaskState: 1,
+        idEquipment: 1,
+      };
+      let idTaskAdded: Number = 0;
+      request("http://localhost:8000")
+        .post("/task")
+        .send(taskAdded)
+        .expect(200)
+        .end((err: Error, res: any) => {
+          if (err) {
+            console.log(err);
+          }
+          idTaskAdded = res.body.idTask;
+          expect(res.body.description).toEqual(taskAdded.description);
+          request("http://localhost:8000")
+            .delete(`/task/${idTaskAdded}`)
+            .expect(200)
+            .end((err: Error, _res: any) => {
+              if (err) {
+                console.log(err);
               }
-          );
-      });
-      it("Status 200", () => {
-          expect(data.status).toBe(200);
-          });
-      });
-
-      describe("POST /task", () => {
-        let data: IData = {};
-        beforeAll((done) => {
-            Request.get(
-                "http://localhost:8000/task",(_error: any, response: any, body: any) => {
-                  data.status = response.statusCode;
-                  data.body = body;
-                  console.log("POST / http://localhost:8000/task : data.status = ", data.status);
-                  done();
-                }
-            );
-        });
-        it("Status 200", () => {
-            expect(data.status).toBe(200);
+              done();
             });
         });
+    });
 
-        describe("GET /task/5", () => {
-          let data: IData = {};
-          beforeAll((done) => {
-              Request.get(
-                  "http://localhost:8000/task/5",(_error: any, response: any, body: any) => {
-                    data.status = response.statusCode;
-                    data.body = body;
-                    console.log("GET / http://localhost:8000/task/:id : data.status = ", data.status);
-                    done();
-                  }
-              );
-          });
-          it("Status 200", () => {
-              expect(data.status).toBe(200);
-              });
-          });
-
-          describe("PUT /task/5", () => {
-            let data: IData = {};
-            beforeAll((done) => {
-                Request.get(
-                    "http://localhost:8000/task/5",(_error: any, response: any, body: any) => {
-                      data.status = response.statusCode;
-                      data.body = body;
-                      console.log("PUT / http://localhost:8000/task/:id : data.status = ", data.status);
-                      done();
-                    }
-                );
-            });
-            it("Status 200", () => {
-                expect(data.status).toBe(200);
-                });
-            });
-
-            describe("DELETE /task/5", () => {
-              let data: IData = {};
-              beforeAll((done) => {
-                  Request.get(
-                      "http://localhost:8000/task/5",(_error: any, response: any, body: any) => {
-                        data.status = response.statusCode;
-                        data.body = body;
-                        console.log("DELETE / http://localhost:8000/task/:id : data.status = ", data.status);
-                        done();
-                      }
-                  );
-              });
-              it("Status 200", () => {
-                  expect(data.status).toBe(200);
-                  });
-              });
-
-
-              describe("GET /task", () => {
-                let data: IData = {};
-                beforeAll((done) => {
-                    Request.get(
-                        "http://localhost:8000/task?id=1",(_error: any, response: any, body: any) => {
-                          data.status = response.statusCode;
-                          data.body = body;
-                          console.log("GET / http://localhost:8000/task?id=1 : data.status = ", data.status);
-                          done();
-                        }
-                    );
-                });
-                it("Status 200", () => {
-                    expect(data.status).toBe(200);
-                    });
-                });
+    it("Updates task id=5, to a tested task, successfully", (done) => {
+      const updatedTask = {
+        idTask: 5,
+        idAgent: 1,
+        idVehicle: 1,
+        description: "Tested Task Now !!👌",
+        idTaskState: 1,
+        idEquipment: 1,
+      };
+      request("http://localhost:8000")
+        .put("/task/5")
+        .send(updatedTask)
+        .expect(200)
+        .end((err: Error, res: any) => {
+          if (err) {
+            console.log(err);
+          }
+          const resultData = JSON.parse(res.text);
+          expect(resultData).toEqual(updatedTask);
+          done();
+        });
+    });
+  });
 });

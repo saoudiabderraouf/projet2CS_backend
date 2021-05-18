@@ -1,15 +1,31 @@
 import { Request, Response } from "express";
-import {getManager} from "typeorm";
+import { getManager } from "typeorm";
 import { read } from "node:fs";
 import {Task} from "../entity/Task";
 import {Step} from "../entity/Step";
 
 
-export const get =  (_req: Request, res: Response) => {
-    res.send("Hello, this is the agent Tasks' management service.");
-}
+/**
+ * Welcome endpoint for task management service.
+ *
+ * @remarks
+ * This method is for service testing, it returns a welcome message.
+ *
+ * @param _req - The request to the service
+ * @param res - The response to the request
+ *
+ */
+export const get = (_req: Request, res: Response) => {
+  res.send("Hello, this is the agent Tasks' management service.");
+};
 
-//Create 
+/**
+ * Create agent task request.
+ *
+ * @param _req - The request to the create a task
+ * @param res - The response to the request
+ *
+ */
 export const addTask = async (req: Request, res: Response) => {
 //    console.log("szzzzzzzzzzzzzzz", req.body.idAgent); 
     try{ 
@@ -40,7 +56,21 @@ export const addTask = async (req: Request, res: Response) => {
     }
 }
 
-//Read 
+    await task.save();
+    return res.send(task);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
+};
+
+/**
+ * Get all tasks request.
+ *
+ * @param _req - The request to get all tasks.
+ * @param res - The response to the request.
+ *
+ */
 export async function getTasks(_req: Request, res: Response) {
     try{
 
@@ -114,7 +144,13 @@ export async function getTasks(_req: Request, res: Response) {
     
 // }
 
-//Find one task by id
+/**
+ * Find a agent task request by id.
+ *
+ * @param _req - The request to find a task with parameter (TaskID).
+ * @param res - The response to the request.
+ *
+ */
 export async function getTask(req: Request, res: Response) {
     const id =req.params.id; 
     try {
