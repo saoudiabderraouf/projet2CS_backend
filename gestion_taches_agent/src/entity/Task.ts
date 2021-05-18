@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany} from "typeorm";
+import {Step} from "../entity/Step"; 
 
 @Entity("Task")
 export class Task extends BaseEntity {
@@ -20,5 +21,8 @@ export class Task extends BaseEntity {
 
     @Column()
     idEquipment: number;
+
+    @OneToMany(() => Step, step => step.task)
+    steps: Step[];
 
 }
