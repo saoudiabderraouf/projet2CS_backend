@@ -25,6 +25,7 @@ export class AuthenticationRoutes {
       [checkJwt, checkRole(["tenant"])],
       this.userController.index
     );
+    this.router.get("/check", [checkJwt], this.userController.check)
     this.router.post("/signup", this.userController.signup);
     this.router.post("/signin", this.userController.signin);
     this.router.put("/:uuid", this.userController.update);
