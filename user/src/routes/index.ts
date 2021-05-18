@@ -1,9 +1,3 @@
-import "reflect-metadata";
-import { Connection, createConnection } from "typeorm";
-import * as express from 'express';
-import { Request, Response, json } from "express";
-import * as cors from 'cors';
-import * as morgan from 'morgan';
 import { Router } from 'express';
 
 import { getAdminTechnique, getAdminTechniques, addAdminTechnique, updateAdminTechnique, deleteAdminTechnique } from '../controllers/AdminTechnique'
@@ -12,12 +6,6 @@ import { getDecideur, getDecideurs, addDecideur, updateDecideur, deleteDecideur 
 import { getLocataire, getLocataires, addLocataire, updateLocataire, deleteLocataire } from '../controllers/Locataire'
 import { getAdminCompte, getAdminComptes, addAdminCompte, updateAdminCompte, deleteAdminCompte } from '../controllers/AdminCompte'
 import { getUtilisateur, getUtilisateurs, addUtilisateur, updateUtilisateur, deleteUtilisateur } from '../controllers/Utilisateur'
-import { getTypeUtilisateur, getTypeUtilisateurs, addTypeUtilisateur, updateTypeUtilisateur, deleteTypeUtilisateur } from '../controllers/TypeUtilisateur'
-
-
-
-
-
 
 const router = Router();
 
@@ -70,18 +58,6 @@ router.get('/users', getUtilisateurs)
 router.get('/users/:userId', getUtilisateur)
 router.put('/users/:userId', updateUtilisateur)
 router.delete('/users/:userId', deleteUtilisateur)
-
-
-
-
-
-
-router.post('/typeUtilisateurs', addTypeUtilisateur)
-router.get('/typeUtilisateurs', getTypeUtilisateurs)
-router.get('/typeUtilisateurs/:typeUtilisateurId', getTypeUtilisateur)
-router.put('/typeUtilisateurs/:typeUtilisateurId', updateTypeUtilisateur)
-router.delete('/typeUtilisateurs/:typeUtilisateurId', deleteTypeUtilisateur)
-
 
 
 export default router;

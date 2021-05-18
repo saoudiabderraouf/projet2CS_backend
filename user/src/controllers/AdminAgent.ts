@@ -24,8 +24,7 @@ export const getAdminAgent =  (req: Request, res: Response) => {
 
 export const addAdminAgent = async (req: Request, res: Response) => {
     const adminAgent = AdminAgent.create({
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+        idUser: req.body.idUtilisateur,
     })
 
     await adminAgent.save()
@@ -46,8 +45,7 @@ export const updateAdminAgent = async (req: Request, res: Response) => {
     }
 
     AdminAgent.update({idAdminAgent: parseInt(req.params.adminAgentId)}, {
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+        idUser: req.body.idUtilisateur,
     })
     .then(adminAgent => {
         

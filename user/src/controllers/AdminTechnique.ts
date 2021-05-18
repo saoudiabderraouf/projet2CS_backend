@@ -5,7 +5,7 @@ import {AdminTechnique} from "../entity/AdminTechnique";
 
 export const getAdminTechnique =  (req: Request, res: Response) => {
 
-    AdminTechnique.findOne({idAdminTechnique: parseInt(req.params.adminTechniqueId)})
+    AdminTechnique.findOne({idAdminTech: parseInt(req.params.adminTechniqueId)})
     .then(adminTechnique => {
         res.status(200).send(adminTechnique);
     }).catch(err => {
@@ -22,8 +22,7 @@ export const getAdminTechnique =  (req: Request, res: Response) => {
 
 export const addAdminTechnique = async (req: Request, res: Response) => {
     const adminTechnique = AdminTechnique.create({
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+        idUser: req.body.idUtilisateur,
     })
 
     await adminTechnique.save()
@@ -43,9 +42,8 @@ export const updateAdminTechnique = async (req: Request, res: Response) => {
         });
     }
 
-    AdminTechnique.update({idAdminTechnique: parseInt(req.params.adminTechniqueId)}, {
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+    AdminTechnique.update({idAdminTech: parseInt(req.params.adminTechniqueId)}, {
+        idUser: req.body.idUtilisateur,
     })
     .then(adminTechnique => {
         res.status(200).send(adminTechnique);
@@ -66,7 +64,7 @@ export const updateAdminTechnique = async (req: Request, res: Response) => {
 }
 
 export const deleteAdminTechnique = async (req: Request, res: Response) => {
-    AdminTechnique.delete({idAdminTechnique: parseInt(req.params.adminTechniqueId)})
+    AdminTechnique.delete({idAdminTech: parseInt(req.params.adminTechniqueId)})
     .then(() => {
         res.status(200).send({message: "AdminTechnique supprimé avec succés!"});
     }).catch(err => {

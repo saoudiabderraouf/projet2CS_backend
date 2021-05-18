@@ -1,29 +1,26 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-@Entity("Locataire")
+@Entity("Tenant")
 export class Locataire extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    idLocataire: number;
+    idTenant: number;
 
     @Column()
-    idUtilisateur: number;
+    idUser: number;
 
     @Column()
-    nom: string;
+    refPermit: string;
 
     @Column()
-    prenom: string;
+    profilePicture: string;
 
     @Column()
-    adresse: string;
+    permitPicture: string;
 
     @Column()
-    photoPersonnelle: string;
+    selfie: string;
 
     @Column()
-    photoPermisSelfie: string;
-
-    @Column()
-    idTypeAbonnement: number;
+    accountState: string
 }

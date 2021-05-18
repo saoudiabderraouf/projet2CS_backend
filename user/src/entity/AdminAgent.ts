@@ -7,8 +7,5 @@ export class AdminAgent extends BaseEntity {
     idAdminAgent: number;
 
     @Column()
-    idUtilisateur: number;
-
-    @Column()
-    adresse: string;
+    idUser: number;
 }

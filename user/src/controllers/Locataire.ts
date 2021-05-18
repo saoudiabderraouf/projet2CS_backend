@@ -5,7 +5,7 @@ import {Locataire} from "../entity/Locataire";
 
 export const getLocataire =  (req: Request, res: Response) => {
 
-    Locataire.findOne({idLocataire: parseInt(req.params.locataireId)})
+    Locataire.findOne({idTenant: parseInt(req.params.locataireId)})
     .then(locataire => {
         res.status(200).send(locataire);
     }).catch(err => {
@@ -22,13 +22,11 @@ export const getLocataire =  (req: Request, res: Response) => {
 
 export const addLocataire = async (req: Request, res: Response) => {
     const locataire = Locataire.create({
-        idUtilisateur: req.body.idUtilisateur,
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        adresse: req.body.adresse,
-        photoPersonnelle: req.body.photoPersonnelle,
-        photoPermisSelfie: req.body.photoPermisSelfie,
-        idTypeAbonnement: req.body.idTypeAbonnement,
+        idUser: req.body.idUtilisateur,
+        profilePicture: req.body.photoPersonnelle,
+        selfie: req.body.photoPermisSelfie,
+        permitPicture: req.body.permis,
+        accountState: "pending",
     })
 
     await locataire.save()
@@ -48,14 +46,12 @@ export const updateLocataire = async (req: Request, res: Response) => {
         });
     }
 
-    Locataire.update({idLocataire: parseInt(req.params.locataireId)}, {
-        idUtilisateur: req.body.idUtilisateur,
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        adresse: req.body.adresse,
-        photoPersonnelle: req.body.photoPersonnelle,
-        photoPermisSelfie: req.body.photoPermisSelfie,
-        idTypeAbonnement: req.body.idTypeAbonnement,
+    Locataire.update({idTenant: parseInt(req.params.locataireId)}, {
+        idUser: req.body.idUtilisateur,
+        profilePicture: req.body.photoPersonnelle,
+        selfie: req.body.photoPermisSelfie,
+        permitPicture: req.body.permis,
+        accountState: req.body.state,
     })
     .then(locataire => {
         res.status(200).send(locataire);
@@ -76,7 +72,7 @@ export const updateLocataire = async (req: Request, res: Response) => {
 }
 
 export const deleteLocataire = async (req: Request, res: Response) => {
-    Locataire.delete({idLocataire: parseInt(req.params.locataireId)})
+    Locataire.delete({idTenant: parseInt(req.params.locataireId)})
     .then(() => {
         res.status(200).send({message: "Locataire supprimé avec succés!"});
     }).catch(err => {

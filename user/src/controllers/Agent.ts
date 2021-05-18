@@ -22,11 +22,9 @@ export const getAgent =  (req: Request, res: Response) => {
 
 export const addAgent = async (req: Request, res: Response) => {
     const agent = Agent.create({
-        idUtilisateur: req.body.idUtilisateur,
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        adresse: req.body.adresse,
-        photo: req.body.photo,
+        idUser: req.body.idUtilisateur,
+        personalPhoto: req.body.photo,
+        refPermis: req.body.permis
     })
 
     await agent.save()
@@ -47,11 +45,9 @@ export const updateAgent = async (req: Request, res: Response) => {
     }
 
     Agent.update({idAgent: parseInt(req.params.agentId)}, {
-        idUtilisateur: req.body.idUtilisateur,
-        nom: req.body.nom,
-        prenom: req.body.prenom,
-        adresse: req.body.adresse,
-        photo: req.body.photo,
+        idUser: req.body.idUtilisateur,
+        personalPhoto: req.body.photo,
+        refPermis: req.body.permis
     })
     .then(agent => {
         res.status(200).send(agent);

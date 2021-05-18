@@ -5,7 +5,7 @@ import {AdminCompte} from "../entity/AdminCompte";
 
 export const getAdminCompte =  (req: Request, res: Response) => {
 
-    AdminCompte.findOne({idAdminCompte: parseInt(req.params.adminCompteId)})
+    AdminCompte.findOne({idAdminAccount: parseInt(req.params.adminCompteId)})
     .then(adminCompte => {
         res.status(200).send(adminCompte);
     }).catch(err => {
@@ -22,8 +22,7 @@ export const getAdminCompte =  (req: Request, res: Response) => {
 
 export const addAdminCompte = async (req: Request, res: Response) => {
     const adminCompte = AdminCompte.create({
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+        idUser: req.body.idUtilisateur,
     })
 
     await adminCompte.save()
@@ -37,9 +36,8 @@ export async function getAdminComptes(_req: Request, res: Response) {
 
 export const updateAdminCompte = async (req: Request, res: Response) => {
 
-    AdminCompte.update({idAdminCompte: parseInt(req.params.adminCompteId)}, {
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+    AdminCompte.update({idAdminAccount: parseInt(req.params.adminCompteId)}, {
+        idUser: req.body.idUtilisateur,
     })
     .then(adminCompte => {
         res.status(200).send(adminCompte);
@@ -60,7 +58,7 @@ export const updateAdminCompte = async (req: Request, res: Response) => {
 }
 
 export const deleteAdminCompte = async (req: Request, res: Response) => {
-    AdminCompte.delete({idAdminCompte: parseInt(req.params.adminCompteId)})
+    AdminCompte.delete({idAdminAccount: parseInt(req.params.adminCompteId)})
     .then(() => {
         res.status(200).send({message: "AdminCompte supprimé avec succés!"});
     }).catch(err => {

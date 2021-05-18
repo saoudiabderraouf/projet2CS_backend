@@ -5,7 +5,7 @@ import {Decideur} from "../entity/Decideur";
 
 export const getDecideur =  (req: Request, res: Response) => {
 
-    Decideur.findOne({idDecideur: parseInt(req.params.decideurId)})
+    Decideur.findOne({idDecisionMaker: parseInt(req.params.decideurId)})
     .then(decideur => {
         res.status(200).send(decideur);
     }).catch(err => {
@@ -22,8 +22,7 @@ export const getDecideur =  (req: Request, res: Response) => {
 
 export const addDecideur = async (req: Request, res: Response) => {
     const decideur = Decideur.create({
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+        idUser: req.body.idUtilisateur,
     })
 
     await decideur.save()
@@ -43,9 +42,8 @@ export const updateDecideur = async (req: Request, res: Response) => {
         });
     }
 
-    Decideur.update({idDecideur: parseInt(req.params.decideurId)}, {
-        idUtilisateur: req.body.idUtilisateur,
-        adresse: req.body.adresse,
+    Decideur.update({idDecisionMaker: parseInt(req.params.decideurId)}, {
+        idUser: req.body.idUtilisateur,
     })
     .then(decideur => {
         res.status(200).send(decideur);
@@ -66,7 +64,7 @@ export const updateDecideur = async (req: Request, res: Response) => {
 }
 
 export const deleteDecideur = async (req: Request, res: Response) => {
-    Decideur.delete({idDecideur: parseInt(req.params.decideurId)})
+    Decideur.delete({idDecisionMaker: parseInt(req.params.decideurId)})
     .then(() => {
         res.status(200).send({message: "Decideur supprimé avec succés!"});
     }).catch(err => {

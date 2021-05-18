@@ -1,14 +1,11 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-@Entity("Decideur")
+@Entity("DecisionMaker")
 export class Decideur extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    idDecideur: number;
+    idDecisionMaker: number;
 
     @Column()
-    idUtilisateur: number;
-
-    @Column()
-    adresse: string;
+    idUser: number;
 }

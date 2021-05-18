@@ -26,7 +26,8 @@ export const addUtilisateur = async (req: Request, res: Response) => {
         firstName: req.body.prenom,
         phoneNumber: req.body.numeroTelephone,
         address: req.body.address,
-        userName: req.body.userName
+        userName: req.body.userName,
+        userType: req.body.type
     })
 
     await user.save()

@@ -7,17 +7,11 @@ export class Agent extends BaseEntity {
     idAgent: number;
 
     @Column()
-    idUtilisateur: number;
+    idUser: number;
 
     @Column()
-    nom: string;
+    personalPhoto: string;
 
     @Column()
-    prenom: string;
-
-    @Column()
-    adresse: string;
-
-    @Column()
-    photo: string;
+    refPermis: string
 }

@@ -1,14 +1,11 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-@Entity("AdminCompte")
+@Entity("AdminAccount")
 export class AdminCompte extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    idAdminCompte: number;
+    idAdminAccount: number;
 
     @Column()
-    idUtilisateur: number;
-
-    @Column()
-    adresse: string;
+    idUser: number;
 }

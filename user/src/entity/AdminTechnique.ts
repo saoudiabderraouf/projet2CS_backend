@@ -1,14 +1,11 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
-@Entity("AdminTechnique")
+@Entity("AdminTechnical")
 export class AdminTechnique extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    idAdminTechnique: number;
+    idAdminTech: number;
 
     @Column()
-    idUtilisateur: number;
-
-    @Column()
-    adresse: string;
+    idUser: number;
 }
