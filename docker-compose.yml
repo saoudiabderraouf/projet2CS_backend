@@ -1,11 +1,18 @@
 version: '3.8'
+
 services:
-    template:
+    redis:
+        image: "redis:alpine"
+        ports:
+            - 6379:6379
+        environment:
+            - ALLOW_EMPTY_PASSWORD=yes
+    vehicles:
         build:
-            context: ./template
+            context: ./vehicles
             target: development
         volumes:
-            - ./template:/src
+            - ./vehicles:/src
             - /src/node_modules
         command: npm run start:dev
         ports:
@@ -27,4 +34,54 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+    user:
+        build:
+            context: ./user
+            target: development
+        volumes:
+            - ./user:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8100:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
+            
+    tracking:        
+        build:
+            context: ./tracking
+            target: development
+        volumes:
+            - ./tracking:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8001:8001"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*    
+    borne-vehicule:
+        build:
+            context: ./borne-vehicule
+            target: development
+        volumes:
+            - ./borne-vehicule:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8200:8000"
+            DEBUG: src:*  
+
+    geolocalisation:
+        build:
+            context: ./geolocalisation
+            target: development
+        volumes:
+            - ./geolocalisation:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8002:8002"
+
 

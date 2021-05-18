@@ -1,8 +1,9 @@
-import { Router, Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
 import { User } from "../entity/Authentication";
+import { checkRole } from "../Middleware/checkRole";
 
 export class UserController {
   public signup = async (_req: Request, res: Response) => {
@@ -10,7 +11,7 @@ export class UserController {
       const user = await User.create({
         email: _req.body.email,
         password: _req.body.password,
-        role: _req.body.role,
+        idUser: _req.body.idUser,
       });
 
       const salt = await bcrypt.genSalt(10);
@@ -20,7 +21,7 @@ export class UserController {
 
       const payload = {
         user: {
-          id: user.id,
+          id: user.idAuthUser,
         },
       };
 
@@ -63,7 +64,7 @@ export class UserController {
 
       const payload = {
         user: {
-          id: user.id,
+          id: user.idAuthUser,
         },
       };
 
@@ -87,6 +88,30 @@ export class UserController {
       });
     }
   };
+  
+  public check = async (req: Request, res: Response) => {
+    let role = req.query.role
+
+    let checkR: RequestHandler = (_, _1, _2) => {};
+    
+    if (typeof role === "string")
+      checkR = checkRole([role])
+    else if(typeof role === "object" && role.length) {
+      checkR = checkRole(role as string[])
+    } else {
+      res.status(400).json({
+        message: "wrong query type of 'role'."
+      })
+      return;
+    }
+
+    checkR(req, res, () => {
+      res.status(200).json({
+        auth: true
+      })
+    })
+
+  } 
 
   public index = async (_: Request, res: Response) => {
     const users = await User.find();
@@ -94,15 +119,14 @@ export class UserController {
   };
 
   public update = async (_req: Request, res: Response) => {
-    const uuid = _req.params.uuid;
-    const { email, password, role } = _req.body;
+    const idUser = parseInt(_req.params.uuid);
+    const { email, password } = _req.body;
 
     try {
-      const user = await User.findOneOrFail({ uuid });
+      const user = await User.findOneOrFail({ idUser });
 
       user.email = email || user.email;
       user.password = password || user.password;
-      user.role = role || user.role;
 
       await user.save();
 
@@ -116,10 +140,10 @@ export class UserController {
   };
 
   public delete = async (_req: Request, res: Response) => {
-    const uuid = _req.params.uuid;
+    const idUser = parseInt(_req.params.uuid);
 
     try {
-      const user = await User.findOneOrFail({ uuid });
+      const user = await User.findOneOrFail({ idUser });
 
       await user.remove();
 
