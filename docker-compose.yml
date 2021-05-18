@@ -20,6 +20,20 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
+
+    gestion_taches_agent:
+        build:
+            context: ./gestion_taches_agent
+            target: development
+        volumes:
+            - ./gestion_taches_agent:/src
+            - /src/node_modules
+        command: npm run start:dev
+        ports:
+            - "8001:8000"
+        environment: 
+            NODE_ENV: development
+            DEBUG: src:*
     user:
         build:
             context: ./user
@@ -69,6 +83,5 @@ services:
         command: npm run start:dev
         ports:
             - "8002:8002"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
+
+
