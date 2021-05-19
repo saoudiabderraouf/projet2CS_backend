@@ -1,27 +1,6 @@
 version: '3.8'
 
 services:
-<<<<<<< HEAD
-    userapi:
-      build:
-          context: ./userapi
-          target: development
-      volumes:
-          - ./userapi:/src
-          - /src/node_modules
-      command: npm run start:dev
-      ports:
-          - "8000:8000"
-      environment: 
-          NODE_ENV: development
-          DEBUG: src:*
-    adminagentapi:
-        build:
-            context: ./adminagentapi
-            target: development
-        volumes:
-            - ./adminagentapi:/src
-=======
     redis:
         image: "redis:alpine"
         ports:
@@ -34,7 +13,6 @@ services:
             target: development
         volumes:
             - ./vehicles:/src
->>>>>>> 8fe075daaab0506d5c81b545236c81f715f5dbeb
             - /src/node_modules
         command: npm run start:dev
         ports:
@@ -42,75 +20,6 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-<<<<<<< HEAD
-    admincompteapi:
-        build:
-            context: ./admincompteapi
-            target: development
-        volumes:
-            - ./admincompteapi:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8000:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    admintechniqueapi:
-        build:
-            context: ./admintechniqueapi
-            target: development
-        volumes:
-            - ./admintechniqueapi:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8000:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    decideurapi:
-        build:
-            context: ./decideurapi
-            target: development
-        volumes:
-            - ./decideurapi:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8000:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    agentapi:
-        build:
-            context: ./agentapi
-            target: development
-        volumes:
-            - ./agentapi:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8000:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    locataireapi:
-        build:
-            context: ./locataireapi
-            target: development
-        volumes:
-            - ./locataireapi:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8000:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    
-=======
-
     gestion_taches_agent:
         build:
             context: ./gestion_taches_agent
@@ -137,7 +46,6 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*
-            
     tracking:        
         build:
             context: ./tracking
@@ -173,6 +81,3 @@ services:
         command: npm run start:dev
         ports:
             - "8002:8002"
-
-
->>>>>>> 8fe075daaab0506d5c81b545236c81f715f5dbeb
