@@ -59,18 +59,6 @@ services:
         environment: 
             NODE_ENV: development
             DEBUG: src:*    
-    borne-vehicule:
-        build:
-            context: ./borne-vehicule
-            target: development
-        volumes:
-            - ./borne-vehicule:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8200:8000"
-            DEBUG: src:*  
-
     geolocalisation:
         build:
             context: ./geolocalisation
