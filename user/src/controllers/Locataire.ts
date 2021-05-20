@@ -26,6 +26,9 @@ export const addLocataire = async (req: Request, res: Response) => {
         profilePicture: req.body.photoPersonnelle,
         selfie: req.body.photoPermisSelfie,
         permitPicture: req.body.permis,
+        subCard: 0,
+        points: 0,
+        refPermit: "",
         accountState: "pending",
     })
 
@@ -52,6 +55,9 @@ export const updateLocataire = async (req: Request, res: Response) => {
         selfie: req.body.photoPermisSelfie,
         permitPicture: req.body.permis,
         accountState: req.body.state,
+        subCard: req.body.card,
+        points: req.body.points,
+        refPermit: req.body.refPermis,
     })
     .then(locataire => {
         res.status(200).send(locataire);
