@@ -57,6 +57,8 @@ services:
         command: npm run start:dev
         ports:
             - "8200:8000"
+        environment: 
+            NODE_ENV: development
             DEBUG: src:*  
 
     geolocalisation:
