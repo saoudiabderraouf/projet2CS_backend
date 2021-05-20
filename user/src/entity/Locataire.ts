@@ -22,5 +22,11 @@ export class Locataire extends BaseEntity {
     selfie: string;
 
     @Column()
+    subCard: number
+
+    @Column()
+    points: number
+
+    @Column()
     accountState: string
 }
