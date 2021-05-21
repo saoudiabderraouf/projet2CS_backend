@@ -88,17 +88,16 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
-
-      authentication:
-        build:
-          context: ./Authentication
-          target: development
-        volumes:
-          - ./Authentication:/src
-          - /src/node_modules
-        command: npm run start:dev
-        ports:
-          - "8005:8000"
-        environment:
-          NODE_ENV: development
-          DEBUG: src:*
+  authentication:
+    build:
+      context: ./Authentication
+      target: development
+    volumes:
+      - ./Authentication:/src
+      - /src/node_modules
+    command: npm run start:dev
+    ports:
+      - "8005:8000"
+    environment:
+      NODE_ENV: development
+      DEBUG: src:*
