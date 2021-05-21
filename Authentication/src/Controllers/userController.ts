@@ -3,6 +3,7 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
 import { User } from "../entity/Authentication";
+import { getRepository } from "typeorm";
 
 export class UserController {
   public signup = async (_req: Request, res: Response) => {
@@ -89,7 +90,9 @@ export class UserController {
   };
 
   public index = async (_: Request, res: Response) => {
-    const users = await User.find();
+    const userRepository = getRepository(User);
+
+    const users = await userRepository.find();
     res.json(users);
   };
 
