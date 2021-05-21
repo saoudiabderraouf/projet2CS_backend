@@ -1,11 +1,18 @@
 version: "3.8"
+
 services:
-  template:
+  redis:
+    image: "redis:alpine"
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+  vehicles:
     build:
-      context: ./template
+      context: ./vehicles
       target: development
     volumes:
-      - ./template:/src
+      - ./vehicles:/src
       - /src/node_modules
     command: npm run start:dev
     ports:
@@ -13,25 +20,26 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
-  vehicletracking:
+
+  gestion_taches_agent:
     build:
-      context: ./VehicleTracking
+      context: ./gestion_taches_agent
       target: development
     volumes:
-      - ./VehicleTracking:/src
+      - ./gestion_taches_agent:/src
       - /src/node_modules
     command: npm run start:dev
     ports:
-      - "8001:8001"
+      - "8001:8000"
     environment:
       NODE_ENV: development
       DEBUG: src:*
-  utilisateur:
+  user:
     build:
-      context: ./utilisateur
+      context: ./user
       target: development
     volumes:
-      - ./utilisateur:/src
+      - ./user:/src
       - /src/node_modules
     command: npm run start:dev
     ports:
@@ -39,16 +47,58 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
-  authentication:
+
+  tracking:
     build:
-      context: ./Authentication
+      context: ./tracking
       target: development
     volumes:
-      - ./Authentication:/src
+      - ./tracking:/src
       - /src/node_modules
     command: npm run start:dev
     ports:
-      - "8005:8000"
+      - "8003:8001"
     environment:
       NODE_ENV: development
       DEBUG: src:*
+  borne-vehicule:
+    build:
+      context: ./borne-vehicule
+      target: development
+    volumes:
+      - ./borne-vehicule:/src
+      - /src/node_modules
+    command: npm run start:dev
+    ports:
+      - "8200:8000"
+    environment:
+      NODE_ENV: development
+      DEBUG: src:*
+
+  geolocalisation:
+    build:
+      context: ./geolocalisation
+      target: development
+    volumes:
+      - ./geolocalisation:/src
+      - /src/node_modules
+    command: npm run start:dev
+    ports:
+      - "8002:8002"
+    environment:
+      NODE_ENV: development
+      DEBUG: src:*
+
+      authentication:
+        build:
+          context: ./Authentication
+          target: development
+        volumes:
+          - ./Authentication:/src
+          - /src/node_modules
+        command: npm run start:dev
+        ports:
+          - "8005:8000"
+        environment:
+          NODE_ENV: development
+          DEBUG: src:*

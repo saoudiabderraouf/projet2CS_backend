@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, RequestHandler, Response } from "express";
 import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
 import { User } from "../entity/Authentication";
 import { getRepository } from "typeorm";
+import { checkRole } from "../Middleware/checkRole";
 
 export class UserController {
   public signup = async (_req: Request, res: Response) => {
@@ -87,6 +88,28 @@ export class UserController {
         message: "Server Error",
       });
     }
+  };
+
+  public check = async (req: Request, res: Response) => {
+    let role = req.query.role;
+
+    let checkR: RequestHandler = (_, _1, _2) => {};
+
+    if (typeof role === "string") checkR = checkRole([role]);
+    else if (typeof role === "object" && role.length) {
+      checkR = checkRole(role as string[]);
+    } else {
+      res.status(400).json({
+        message: "wrong query type of 'role'.",
+      });
+      return;
+    }
+
+    checkR(req, res, () => {
+      res.status(200).json({
+        auth: true,
+      });
+    });
   };
 
   public index = async (_: Request, res: Response) => {
