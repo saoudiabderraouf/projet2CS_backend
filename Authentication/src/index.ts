@@ -18,7 +18,7 @@ app.use(`/`, authenticationRoutes.router);
 
 createConnection();
 
-const server = app.listen(8005, () => {
+const server = app.listen(8000, () => {
   console.log("Authentication Service Up 🚀");
 });
 
