@@ -10,15 +10,7 @@ import { Router } from 'express';
 import { getSignal, getSignals, addSignal, deleteSignal } from '../controllers/Signal'
 
 
-
-
-
-
 const router = Router();
-
-
-
-
 router.post('/signals', addSignal)
 router.get('/signals', getSignals)
 router.get('/signals/:idSignal', getSignal)

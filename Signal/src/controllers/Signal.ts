@@ -2,10 +2,9 @@ import { Request, Response } from "express";
 import {Signal} from "../entity/Signal";
 
 
-
 export const getSignal =  (req: Request, res: Response) => {
 
-    Signal.findOne({idSignal: parseInt(req.params.userId)})
+    Signal.findOne({idSignal: parseInt(req.params.idSignal)})
     .then(signal => {
         res.status(200).send(signal);
     }).catch(err => {

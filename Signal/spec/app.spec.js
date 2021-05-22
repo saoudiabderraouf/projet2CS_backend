@@ -39,9 +39,9 @@ describe("POST /signals", () => {
             url: "http://localhost:8111/signals",
             headers: {"content-type": "application/json"},
             body: JSON.stringify({
-                signalType: "testUserName",
+                signalType: "panne",
                 message: "testFirstName",
-                sourceType: 2,
+                sourceType: "Auto",
                 idUserSource: 11,
                 idVehicle: 111,
                 sent_at: 1281
