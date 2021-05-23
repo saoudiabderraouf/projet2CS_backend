@@ -7,6 +7,7 @@ services:
       - 6379:6379
     environment:
       - ALLOW_EMPTY_PASSWORD=yes
+
   vehicles:
     build:
       context: ./vehicles
@@ -34,6 +35,7 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
+
   user:
     build:
       context: ./user
@@ -61,6 +63,7 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
+
   borne-vehicule:
     build:
       context: ./borne-vehicule
@@ -88,6 +91,7 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
+
   authentication:
     build:
       context: ./Authentication
@@ -101,16 +105,17 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
-    Signal:
-      build:
-            context: ./Signal
-            target: development
-      volumes:
-            - ./user:/src
-            - /src/node_modules
-      command: npm run start:dev
-      ports:
-            - "8111:8000"
-      environment: 
-            NODE_ENV: development
-            DEBUG: src:*
+
+  signal:
+    build:
+        context: ./signal
+        target: development
+    volumes:
+        - ./user:/src
+        - /src/node_modules
+    command: npm run start:dev
+    ports:
+        - "8111:8000"
+    environment: 
+        NODE_ENV: development
+        DEBUG: src:*
