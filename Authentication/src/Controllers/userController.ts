@@ -79,6 +79,7 @@ export class UserController {
           if (err) throw err;
           _res.status(200).json({
             token,
+            id: user.idUser
           });
         }
       );
