@@ -101,3 +101,16 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
+    Signal:
+      build:
+            context: ./Signal
+            target: development
+      volumes:
+            - ./user:/src
+            - /src/node_modules
+      command: npm run start:dev
+      ports:
+            - "8111:8000"
+      environment: 
+            NODE_ENV: development
+            DEBUG: src:*
