@@ -1,4 +1,3 @@
-
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -8,6 +7,7 @@ import {
   BeforeInsert,
 } from "typeorm";
 import { UsedEquipment } from "./UsedEquipment";
+
 import { v4 as uuid } from "uuid";
 
 /**
@@ -15,33 +15,20 @@ import { v4 as uuid } from "uuid";
  */
 @Entity("Task")
 export class Task extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    idTask: number;
+  @PrimaryGeneratedColumn()
+  idTask: number;
 
-    @Column()
-    idAgent: number;
+  @Column()
+  idAgent: number;
 
-    @Column() 
-    idVehicle: number; 
+  @Column()
+  idVehicle: number;
 
-    @Column()
-    taskTitle: string; 
+  @Column()
+  description: string;
 
-    @Column()
-    description: string;
-
-    @Column()
-    idTaskState: number;
-
-    @Column()
-    idTaskModel: number; 
-
-    @Column({ type: 'timestamp' }) 
-    assignmentDate: Date;
-
-    @Column({ type: 'timestamp' }) 
-    endDate: Date;
-
+  @Column()
+  idTaskState: number;
 
   @OneToMany(() => UsedEquipment, (usedEquipment) => usedEquipment.task)
   usedEquipments: UsedEquipment[];

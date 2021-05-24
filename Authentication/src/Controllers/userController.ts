@@ -3,6 +3,7 @@ import * as bcrypt from "bcrypt";
 import * as jwt from "jsonwebtoken";
 
 import { User } from "../entity/Authentication";
+import { getRepository } from "typeorm";
 import { checkRole } from "../Middleware/checkRole";
 
 export class UserController {
@@ -78,6 +79,7 @@ export class UserController {
           if (err) throw err;
           _res.status(200).json({
             token,
+            id: user.idUser
           });
         }
       );
@@ -88,33 +90,33 @@ export class UserController {
       });
     }
   };
-  
+
   public check = async (req: Request, res: Response) => {
-    let role = req.query.role
+    let role = req.query.role;
 
     let checkR: RequestHandler = (_, _1, _2) => {};
-    
-    if (typeof role === "string")
-      checkR = checkRole([role])
-    else if(typeof role === "object" && role.length) {
-      checkR = checkRole(role as string[])
+
+    if (typeof role === "string") checkR = checkRole([role]);
+    else if (typeof role === "object" && role.length) {
+      checkR = checkRole(role as string[]);
     } else {
       res.status(400).json({
-        message: "wrong query type of 'role'."
-      })
+        message: "wrong query type of 'role'.",
+      });
       return;
     }
 
     checkR(req, res, () => {
       res.status(200).json({
-        auth: true
-      })
-    })
-
-  } 
+        auth: true,
+      });
+    });
+  };
 
   public index = async (_: Request, res: Response) => {
-    const users = await User.find();
+    const userRepository = getRepository(User);
+
+    const users = await userRepository.find();
     res.json(users);
   };
 

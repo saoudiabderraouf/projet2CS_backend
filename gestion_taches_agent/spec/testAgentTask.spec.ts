@@ -52,14 +52,16 @@ describe("Service Test : ", () => {
             console.log(err);
           }
           const resultData = JSON.parse(res.text);
-          const expectedData = {
-            idTask: 8,
-            idAgent: 2,
-            idVehicle: 1,
-            description: "maintenance task :))",
-            idTaskState: 1,
-            idEquipment: 1,
-          };
+          const expectedData = [
+            {
+              idTask: 8,
+              idAgent: 2,
+              idVehicle: 1,
+              description: "xxx",
+              idTaskState: 1,
+              idEquipment: 1,
+            },
+          ];
           expect(resultData).toEqual(expectedData);
           done();
         });
@@ -96,9 +98,9 @@ describe("Service Test : ", () => {
         });
     });
 
-    it("Updates task id=5, to a tested task, successfully", (done) => {
+    it("Updates task id=60, to a tested task, successfully", (done) => {
       const updatedTask = {
-        idTask: 5,
+        idTask: 60,
         idAgent: 1,
         idVehicle: 1,
         description: "Tested Task Now !!👌",
@@ -106,7 +108,7 @@ describe("Service Test : ", () => {
         idEquipment: 1,
       };
       request("http://localhost:8000")
-        .put("/task/5")
+        .put("/task/60")
         .send(updatedTask)
         .expect(200)
         .end((err: Error, res: any) => {
