@@ -10,6 +10,7 @@
     "morgan": "^1.10.0",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
+    "sqlite3": "^5.0.2",
     "typedoc": "^0.20.36",
     "typeorm": "0.2.32",
     "uuid": "^8.3.2"

@@ -9,7 +9,7 @@ import {
 import { v4 as uuid } from "uuid";
 
 export abstract class SharedAttributes extends BaseEntity {
-  @Column({ type: "uuid" })
+  @Column({ type: "uuid", nullable: true })
   uuid: string;
 
   @CreateDateColumn()

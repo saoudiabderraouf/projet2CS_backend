@@ -25,6 +25,5 @@ createConnection()
         } || 🐳 Docker:8002 `
       );
     });
-    module.exports = server;
   })
   .catch((error) => console.log(error));
