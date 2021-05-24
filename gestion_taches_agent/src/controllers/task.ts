@@ -3,6 +3,7 @@ import { getManager } from "typeorm";
 import { read } from "node:fs";
 import {Task} from "../entity/Task";
 import {Step} from "../entity/Step";
+import {TaskModel} from "../entity/TaskModel"; 
 
 
 /**
@@ -35,18 +36,17 @@ export const addTask = async (req: Request, res: Response) => {
             description : req.body.description,
             idTaskState : req.body.idTaskState, 
             idEquipment : req.body.idEquipment, 
-            steps : req.body.steps
         }); 
         await task.save(); 
 
-        const array = req.body.steps; 
-        await array.forEach(async (element: { step: any; }) => {
-            const step = Step.create({
-                task : task, 
-                step : element.step
-            }); 
-            await step.save(); 
-        });
+        // const array = req.body.steps; 
+        // await array.forEach(async (element: { step: any; }) => {
+        //     const step = Step.create({
+        //         task : task, 
+        //         step : element.step
+        //     }); 
+        //     await step.save(); 
+        // });
 
         return res.send(task); 
 

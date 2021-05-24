@@ -1,5 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typeorm";
-import {Task} from "../entity/Task"; 
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, OneToOne} from "typeorm";
+import {TaskModel} from "./TaskModel"; 
 
 @Entity("Step")
 export class Step extends BaseEntity {
@@ -7,15 +7,19 @@ export class Step extends BaseEntity {
     @PrimaryGeneratedColumn()
     idStep: number;
 
-    // @Column() 
-    // idTask: number;
-
-    @ManyToOne(() => Task, task => task.steps, {
-        onDelete: 'CASCADE', 
-        onUpdate: 'CASCADE'
-    })
-    task: Task;
+    @OneToOne(() => TaskModel)
+    @JoinColumn()
+    taskModel: TaskModel;
 
     @Column()
     step: string;
+
+    @ManyToOne(() => TaskModel, taskModel => taskModel.steps, {
+        onDelete: 'CASCADE', 
+        onUpdate: 'CASCADE'
+    })
+    model: TaskModel;
+  
 }
+
+
