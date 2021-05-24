@@ -20,11 +20,13 @@ export class Signal extends BaseEntity {
     idUserSource:number;
     default:null;
    
-
     @Column()
     idVehicle:number;
 
     @Column()
     sent_at:Date;
+
+    @Column()
+    treated:boolean;
 
 }

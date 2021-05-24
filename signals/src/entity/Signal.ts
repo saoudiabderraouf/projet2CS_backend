@@ -22,6 +22,8 @@ export class Signal extends BaseEntity {
     idVehicle: number
 
     @Column()
-    sent_at: number
+    sent_at: Date
    
+    @Column({ nullable: true })
+    treated: boolean
 }

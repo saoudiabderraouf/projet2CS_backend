@@ -6,8 +6,8 @@ const router = Router();
 //user
 router.get('/', get);
 //etat de vehicule 
-router.post('/isRemorquer',createSignalRemorque)
-router.post('/dateDepasse',createSignalTime)
+router.post('/estRemorquee',createSignalRemorque)
+router.post('/dateDepassee',createSignalTime)
 
 
 export default router;

@@ -1,13 +1,15 @@
 import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, Timestamp} from "typeorm";
 
 
-@Entity("Borne")
-export class Borne extends BaseEntity {
+@Entity("Tenant")
+export class Tenant extends BaseEntity {
 
     @PrimaryGeneratedColumn()
-    idBorne: number;
+    idTenant: number;
 
     @Column()
-    city:String;
+    idUser:number;
+
+   
 
 }

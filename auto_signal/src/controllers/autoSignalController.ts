@@ -1,11 +1,8 @@
 import { Request, Response } from "express";
-import {VehicleState} from "../entity/VehicleState";
 import {Rental,rental_status_enum} from "../entity/Rental";
-import {Tenant} from "../entity/Tenant";
 import { User } from "../entity/User";
-import { Borne } from "../entity/Borne";
 import { Signal } from "../entity/Signal";
-import { moveMessagePortToContext } from "node:worker_threads";
+
 
 
 
@@ -25,6 +22,7 @@ export const createSignalRemorque = async (req: Request, res: Response) => {
             message:"Attention la véhicule est remorquée",
             sourceType:"Auto",
             idVehicle:idVehicle,
+            treated:false,
             sent_at:currdatetime
         })
 
@@ -47,14 +45,21 @@ export const createSignalTime = async (req: Request, res: Response) => {
         const id=Number(req.query.idVehicle)
         var currdatetime = new Date();
         const rental= await Rental.findOneOrFail({idVehicle:id,rentalstate:"active"})
+        const restitutionDate = new Date(
+            (rental.restitutionDate!!).toUTCString()
+                                      .replace("00:00:00", 
+                                       rental?.restitutionTime.toString!!));
 
-        if(rental.restitutionDate < currdatetime && rental.restitutionTime.getHours() < currdatetime.getHours()){
-          
+        if(rental.restitutionDate.getDate() < currdatetime.getDate()||
+    
+        (rental.restitutionDate.getDate() == currdatetime.getDate() &&(currdatetime.getHours()- restitutionDate.getHours())> 6 )){
+       
             const signal = Signal.create({
                 signalType:"theft",
                 message:"Attention la date de location a été dépassée",
                 sourceType:"Auto",
                 idVehicle:id,
+                treated:false,
                 sent_at:currdatetime
             })
     
@@ -62,7 +67,7 @@ export const createSignalTime = async (req: Request, res: Response) => {
            // res.send(signal)
             return res.status(200).json(signal)
     
-}    
+    }
     else {
         res.send({message:"succ"})
         return res.status(200)
