@@ -1,29 +1,28 @@
 import "reflect-metadata";
-import {createConnection, Connection} from "typeorm";
+import { createConnection, Connection } from "typeorm";
 
-import * as express from 'express';
+import * as express from "express";
 import { Request, Response, json } from "express";
-import * as cors from 'cors';
-import * as morgan from 'morgan';
-import Router from './routes'
+import * as cors from "cors";
+import * as morgan from "morgan";
+import Router from "./routes";
 
-const app = express()
+const app = express();
 
-app.use(json())
-app.use(cors())
-app.use(morgan("dev"))
+app.use(json());
+app.use(cors());
+app.use(morgan("dev"));
 
-app.use(Router)
+app.use(Router);
 
-createConnection().then(async _connection => {   
+createConnection()
+  .then(async (_connection) => {
     const server = app.listen(8000, () => {
-        console.log("server started. 🚀")
-    }); 
-    module.exports = server; 
-
-}).catch(error => console.log(error));
-
-
+      console.log("Service gestion de tâche up 🚀");
+    });
+    module.exports = server;
+  })
+  .catch((error) => console.log(error));
 
 // createConnection();
 

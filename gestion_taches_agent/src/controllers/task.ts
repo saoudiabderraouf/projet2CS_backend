@@ -129,8 +129,8 @@ export async function getTask(req: Request, res: Response) {
  *
  */
 export async function getTaskByAgentId(req: Request, res: Response) {
-  const id = req.query.id;
-  // console.log('paramatre id = ', id);
+  const id = req.params.id;
+  console.log("paramatre id = ", id);
   try {
     const tasks = await getManager()
       .createQueryBuilder(Task, "task")
