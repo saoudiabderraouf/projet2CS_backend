@@ -20,11 +20,11 @@ const router = Router();
 
 router.get("/", get);
 // Routes for Equipments
-router.post("/Equipment", addEquip);
-router.get("/Equipment", getEquips);
-router.put("/Equipment/:uuid", updateEquip);
-router.delete("/Equipment/:uuid", deleteEquip);
-router.get("/Equipment/:uuid", getEquip);
+router.post("/equipment", addEquip);
+router.get("/equipment", getEquips);
+router.put("/equipment/:uuid", updateEquip);
+router.delete("/equipment/:uuid", deleteEquip);
+router.get("/equipment/:uuid", getEquip);
 
 // Routes for UsedEquipments
 router.post("/usedEquipment", addUsedEquip);

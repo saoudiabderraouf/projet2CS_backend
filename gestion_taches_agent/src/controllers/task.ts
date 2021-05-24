@@ -31,7 +31,6 @@ export const addTask = async (req: Request, res: Response) => {
       idVehicle: req.body.idVehicle,
       description: req.body.description,
       idTaskState: req.body.idTaskState,
-      idEquipment: req.body.idEquipment,
     });
 
     await task.save();
@@ -51,7 +50,7 @@ export const addTask = async (req: Request, res: Response) => {
  */
 export async function getTasks(_req: Request, res: Response) {
   try {
-    const Tasks = await Task.find();
+    const Tasks = await Task.find({ relations: ["usedEquipments"] });
     console.log(Tasks);
     return res.json(Tasks);
   } catch (err) {
@@ -75,7 +74,7 @@ export async function updateTask(req: Request, res: Response) {
     task.idVehicle = req.body.idVehicle;
     task.description = req.body.description;
     task.idTaskState = req.body.idTaskState;
-    task.idEquipment = req.body.idEquipment;
+
     await task.save();
     return res.json(task);
   } catch (err) {

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Equipment } from "../entity/Equipment";
+import { Task } from "../entity/Task";
 /**
  * Welcome endpoint for task management service.
  *

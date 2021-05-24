@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Equipment } from "../entity/Equipment";
 import { UsedEquipment } from "../entity/UsedEquipment";
 import { validate } from "class-validator";
+import { Task } from "../entity/Task";
 
 /**
  * Create new UsedEquipment request.
@@ -11,14 +12,17 @@ import { validate } from "class-validator";
  *
  */
 export const addUsedEquip = async (req: Request, res: Response) => {
-  const { equipment, description, quantity } = req.body;
+  const { equipment, description, quantity, taskUUID } = req.body;
 
   try {
     const equip = await Equipment.findOneOrFail({ uuid: equipment });
+    const task = await Task.findOneOrFail({ uuid: taskUUID });
+
     const usedEquip = UsedEquipment.create({
       description,
       quantity,
       equipment: equip,
+      task: task,
     });
 
     const errors = await validate(usedEquip);

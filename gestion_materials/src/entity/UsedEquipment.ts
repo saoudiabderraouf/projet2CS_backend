@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
 import { Equipment } from "./Equipment";
+import { Task } from "./Task";
 import { SharedAttributes } from "./SharedAttributes";
 import { Length, Min, Max } from "class-validator";
 
@@ -22,6 +23,9 @@ export class UsedEquipment extends SharedAttributes {
 
   @ManyToOne(() => Equipment, (equipment) => equipment.usedEquipments)
   equipment: Equipment;
+
+  @ManyToOne(() => Task, (task) => task.usedEquipments)
+  task: Task;
 
   toJSON() {
     return { ...this, idUsedEquipment: undefined };
