@@ -18,9 +18,11 @@ app.use(Router);
 
 createConnection()
   .then(async (_connection: Connection) => {
-    const server = app.listen(process.env.SERVICE_PORT, () => {
+    const server = app.listen(process.env.SERVICE_PORT || 8080, () => {
       console.log(
-        `🚀 Materials Up --> 🏠 LocalHost:${process.env.SERVICE_PORT} || 🐳 Docker:8002 `
+        `🚀 Materials Up --> 🏠 LocalHost:${
+          process.env.SERVICE_PORT || 8080
+        } || 🐳 Docker:8002 `
       );
     });
     module.exports = server;
