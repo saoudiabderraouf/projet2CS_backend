@@ -88,7 +88,7 @@ export async function deleteTask(req: Request, res: Response) {
     try {
         const task = await Task.findOneOrFail(id);  
         await task.remove(); 
-        return res.json({ message: 'Tâche supprimée avec succès' })
+        return res.json({ message: 'Task deleted successfully' })
     } catch (err){
         console.log(err); 
         return res.status(500).json(err);
@@ -110,7 +110,7 @@ export async function getTask(req: Request, res: Response) {
         return res.json(task); 
     } catch (err){
         console.log(err); 
-        return res.json({ message: 'Tâche introuvable' }); 
+        return res.json({ message: 'Task not found' }); 
     }
     
 }
