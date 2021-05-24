@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { read } from "node:fs";
-import { Task } from "../entity/Task";
+import {Task} from "../entity/Task";
+
 
 /**
  * Welcome endpoint for task management service.
@@ -14,7 +15,7 @@ import { Task } from "../entity/Task";
  *
  */
 export const get = (_req: Request, res: Response) => {
-  res.send("Hello, this is the agent Tasks' management service.");
+  res.send("Hello, this is the agent's Tasks management service.");
 };
 
 /**
@@ -25,6 +26,7 @@ export const get = (_req: Request, res: Response) => {
  *
  */
 export const addTask = async (req: Request, res: Response) => {
+
   try {
     const task = Task.create({
       idAgent: req.body.idAgent,
@@ -41,6 +43,25 @@ export const addTask = async (req: Request, res: Response) => {
   }
 };
 
+        const task = Task.create({
+            idAgent : req.body.idAgent,
+            idVehicle : req.body.idVehicle, 
+            taskTitle : req.body.taskTitle,
+            description : req.body.description,
+            idTaskState : req.body.idTaskState, 
+            idEquipment : req.body.idEquipment, 
+            idTaskModel : req.body.idTaskModel, 
+            assignmentDate : req.body.assignmentDate, 
+            endDate : req.body.endDate
+        }); 
+        await task.save(); 
+        return res.send(task); 
+    } catch (err){
+        console.log(err); 
+        return res.status(500).json(err); 
+    }
+}
+        
 /**
  * Get all tasks request.
  *
@@ -49,14 +70,32 @@ export const addTask = async (req: Request, res: Response) => {
  *
  */
 export async function getTasks(_req: Request, res: Response) {
-  try {
-    const Tasks = await Task.find({ relations: ["usedEquipments"] });
-    console.log(Tasks);
-    return res.json(Tasks);
+
+      try {
+    const tasks = await Task.find({ relations: ["usedEquipments"] });
+    console.log(tasks);
+    return res.json(tasks);
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
   }
+}
+
+// Update task without updating its steps
+export async function updateTaskState(req: Request, res: Response) {
+    const id = req.params.id;
+    try {
+        const task = await Task.findOneOrFail(id);         
+        task.idTaskState = req.body.idTaskState;  
+        await task.save(); 
+        return res.json(task); 
+    } catch (err){
+        console.log(err); 
+        return res.status(500).json(err); 
+    }
+    
+
+
 }
 
 /**
@@ -81,25 +120,21 @@ export async function updateTask(req: Request, res: Response) {
     console.log(err);
     return res.status(500).json(err);
   }
+
 }
 
-/**
- * Delete a task request.
- *
- * @param _req - The request to update a task with parameter.
- * @param res - The response to the request.
- *
- */
+//Delete
 export async function deleteTask(req: Request, res: Response) {
-  const id = req.params.id;
-  try {
-    const task = await Task.findOneOrFail(id);
-    await task.remove();
-    return res.json({ message: "Tâche supprimée avec succès" });
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+    let id = parseInt(req.params.id); 
+    try {
+        const task = await Task.findOneOrFail(id);  
+        await task.remove(); 
+        return res.json({ message: 'Task deleted successfully' })
+    } catch (err){
+        console.log(err); 
+        return res.status(500).json(err);
+    }
+    
 }
 
 /**
@@ -110,39 +145,33 @@ export async function deleteTask(req: Request, res: Response) {
  *
  */
 export async function getTask(req: Request, res: Response) {
-  const id = req.params.id;
-  try {
-    const task = await getManager()
-      .createQueryBuilder(Task, "task")
-      .where("task.idTask = :id", { id: id })
-      .getMany();
 
-    return res.send(task);
-  } catch (err) {
-    console.log(err);
-    return res.json({ message: "Tâche introuvable" });
-  }
+    const id =req.params.id; 
+    try {
+        const task = await Task.findOneOrFail(id);  
+        return res.json(task); 
+    } catch (err){
+        console.log(err); 
+        return res.json({ message: 'Task not found' }); 
+    }
+
 }
 
-/**
- * Find all all tasks request by AgentID.
- *
- * @param _req - The request to find all tasks with parameter (AgentID).
- * @param res - The response to the request.
- *
- */
+// Find all the tasks of an Agent 
 export async function getTaskByAgentId(req: Request, res: Response) {
-  const id = req.params.id;
-  console.log("paramatre id = ", id);
-  try {
-    const tasks = await getManager()
-      .createQueryBuilder(Task, "task")
-      .where("task.idAgent = :id", { id: id })
-      .getMany();
 
-    return res.send(tasks);
-  } catch (err) {
-    console.log(err);
-    return res.status(500).json(err);
-  }
+    const id = req.params.id;
+    console.log("paramatre id = ", id);
+    try{
+
+    const tasks = await getManager()
+        .createQueryBuilder(Task, "task")
+        .where("task.idAgent = :id", { id: id })
+        .getMany();
+
+    return res.send(tasks); 
+    } catch(err){
+        console.log(err); 
+        return res.status(500).json(err);
+    }
 }

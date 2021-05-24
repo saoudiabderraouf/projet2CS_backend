@@ -1,3 +1,4 @@
+
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -14,20 +15,33 @@ import { v4 as uuid } from "uuid";
  */
 @Entity("Task")
 export class Task extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  idTask: number;
+    @PrimaryGeneratedColumn()
+    idTask: number;
 
-  @Column()
-  idAgent: number;
+    @Column()
+    idAgent: number;
 
-  @Column()
-  idVehicle: number;
+    @Column() 
+    idVehicle: number; 
 
-  @Column()
-  description: string;
+    @Column()
+    taskTitle: string; 
 
-  @Column()
-  idTaskState: number;
+    @Column()
+    description: string;
+
+    @Column()
+    idTaskState: number;
+
+    @Column()
+    idTaskModel: number; 
+
+    @Column({ type: 'timestamp' }) 
+    assignmentDate: Date;
+
+    @Column({ type: 'timestamp' }) 
+    endDate: Date;
+
 
   @OneToMany(() => UsedEquipment, (usedEquipment) => usedEquipment.task)
   usedEquipments: UsedEquipment[];
