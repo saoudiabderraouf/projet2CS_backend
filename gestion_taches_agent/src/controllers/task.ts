@@ -113,8 +113,12 @@ export async function deleteTask(req: Request, res: Response) {
 export async function getTask(req: Request, res: Response) {
   const id = req.params.id;
   try {
-    const task = await Task.findOneOrFail(id);
-    return res.json(task);
+    const task = await getManager()
+      .createQueryBuilder(Task, "task")
+      .where("task.idTask = :id", { id: id })
+      .getMany();
+
+    return res.send(task);
   } catch (err) {
     console.log(err);
     return res.json({ message: "Tâche introuvable" });
