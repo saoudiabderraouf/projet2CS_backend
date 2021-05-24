@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne, JoinColumn, OneToOne} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne} from "typeorm";
 import {TaskModel} from "./TaskModel"; 
 
 @Entity("Step")
@@ -6,10 +6,6 @@ export class Step extends BaseEntity {
 
     @PrimaryGeneratedColumn()
     idStep: number;
-
-    @OneToOne(() => TaskModel)
-    @JoinColumn()
-    taskModel: TaskModel;
 
     @Column()
     step: string;

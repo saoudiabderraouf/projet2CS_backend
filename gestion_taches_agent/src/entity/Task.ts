@@ -1,5 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, JoinColumn, OneToOne} from "typeorm";
-import {TaskModel} from "./TaskModel"; 
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity} from "typeorm";
 
 @Entity("Task")
 export class Task extends BaseEntity {
@@ -10,10 +9,10 @@ export class Task extends BaseEntity {
     idAgent: number;
 
     @Column() 
-    idVehicle: number
+    idVehicle: number; 
 
     @Column()
-    taskTitle: string
+    taskTitle: string; 
 
     @Column()
     description: string;
@@ -24,9 +23,8 @@ export class Task extends BaseEntity {
     @Column()
     idEquipment: number;
 
-    @OneToOne(() => TaskModel)
-    @JoinColumn()
-    TaskModel: TaskModel;
+    @Column()
+    idTaskModel: number; 
 
     @Column({ type: 'timestamp' }) 
     assignmentDate: Date;
@@ -35,6 +33,3 @@ export class Task extends BaseEntity {
     endDate: Date;
 
 }
-   // @OneToMany(() => Step, step => step.task)
-    // @JoinTable()
-    // steps: Step[];
