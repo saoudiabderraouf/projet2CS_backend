@@ -67,6 +67,20 @@ export const deleteSignal = async (req: Request, res: Response) => {
     });
 
 }
+//update the state of signal treated=true 
+export async function updateSignalsState(req: Request, res: Response) {
+    const id= Number(req.params.idSignal)
+    try {
+        const signal= await Signal.findOneOrFail({idSignal:id})
+        signal.treated=true,
+        await signal.save()
+        return res.status(200)
+    } catch (error) {
+        console.error()
+        return res.status(500).json(error)
+    }
+    
+}
     //getSignals panne 
     export const getSignalPannesInformation = async (_req: Request, res: Response) => {
         try{
