@@ -48,7 +48,7 @@
     "@types/qs" "*"
     "@types/range-parser" "*"
 
-"@types/express@^4.17.11":
+"@types/express@*", "@types/express@^4.17.11":
   "integrity" "sha512-no+R6rW60JEc59977wIxreQVsIEOAYwgCqldrA/vkpCnbD7MqTefO97lmoBe4WE0F156bC4uLSP1XHDOySnChg=="
   "resolved" "https://registry.npmjs.org/@types/express/-/express-4.17.11.tgz"
   "version" "4.17.11"
@@ -97,6 +97,14 @@
   dependencies:
     "@types/mime" "^1"
     "@types/node" "*"
+
+"@types/swagger-ui-express@^4.1.2":
+  "integrity" "sha512-t9teFTU8dKe69rX9EwL6OM2hbVquYdFM+sQ0REny4RalPlxAm+zyP04B12j4c7qEuDS6CnlwICywqWStPA3v4g=="
+  "resolved" "https://registry.npmjs.org/@types/swagger-ui-express/-/swagger-ui-express-4.1.2.tgz"
+  "version" "4.1.2"
+  dependencies:
+    "@types/express" "*"
+    "@types/serve-static" "*"
 
 "@types/uuid@^8.3.0":
   "integrity" "sha512-eQ9qFW/fhfGJF8WKHGEHZEyVWfZxrT+6CLIJGBcZPfxUh/+BnEj+UCGYMlr9qZuX/2AltsvwrGqp0LhEW8D0zQ=="
@@ -762,7 +770,7 @@
   "resolved" "https://registry.npmjs.org/etag/-/etag-1.8.1.tgz"
   "version" "1.8.1"
 
-"express@^4.17.1":
+"express@^4.17.1", "express@>=4.0.0":
   "integrity" "sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g=="
   "resolved" "https://registry.npmjs.org/express/-/express-4.17.1.tgz"
   "version" "4.17.1"
@@ -2493,6 +2501,18 @@
   "version" "7.2.0"
   dependencies:
     "has-flag" "^4.0.0"
+
+"swagger-ui-dist@^3.18.1":
+  "integrity" "sha512-R1+eT16XNP1bBLfacISifZAkFJlpwvWsS2vVurF5pbIFZnmCasD/hj+9r/q7urYdQyb0B6v11mDnuYU7rUpfQg=="
+  "resolved" "https://registry.npmjs.org/swagger-ui-dist/-/swagger-ui-dist-3.49.0.tgz"
+  "version" "3.49.0"
+
+"swagger-ui-express@^4.1.6":
+  "integrity" "sha512-Xs2BGGudvDBtL7RXcYtNvHsFtP1DBFPMJFRxHe5ez/VG/rzVOEjazJOOSc/kSCyxreCTKfJrII6MJlL9a6t8vw=="
+  "resolved" "https://registry.npmjs.org/swagger-ui-express/-/swagger-ui-express-4.1.6.tgz"
+  "version" "4.1.6"
+  dependencies:
+    "swagger-ui-dist" "^3.18.1"
 
 "tar@^2.0.0":
   "integrity" "sha512-FCEhQ/4rE1zYv9rYXJw/msRqsnmlje5jHP6huWeBZ704jUTy02c5AZyWujpMR1ax6mVw9NyJMfuK2CMDWVIfgA=="

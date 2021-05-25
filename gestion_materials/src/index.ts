@@ -6,12 +6,16 @@ import { json } from "express";
 import * as cors from "cors";
 import * as morgan from "morgan";
 import Router from "./routes";
+import * as swaggerUi from "swagger-ui-express";
+import * as swaggerDocument from "../swagger.json";
 
 const app = express();
 
 app.use(json());
 app.use(cors());
 app.use(morgan("dev"));
+app.use("/equipment-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 dotenv.config();
 
 app.use(Router);

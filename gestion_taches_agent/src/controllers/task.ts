@@ -123,9 +123,8 @@ export async function updateTask(req: Request, res: Response) {
 
 //Delete
 export async function deleteTask(req: Request, res: Response) {
-  let id = parseInt(req.params.id);
   try {
-    const task = await Task.findOneOrFail(id);
+    const task = await Task.findOneOrFail({ uuid: req.params.id });
     await task.remove();
     return res.json({ message: "Task deleted successfully" });
   } catch (err) {
