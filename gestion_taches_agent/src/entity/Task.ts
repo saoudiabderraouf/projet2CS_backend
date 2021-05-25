@@ -1,4 +1,3 @@
-
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -6,45 +5,47 @@ import {
   BaseEntity,
   OneToMany,
   BeforeInsert,
+  CreateDateColumn,
+  ManyToOne,
 } from "typeorm";
 import { UsedEquipment } from "./UsedEquipment";
 import { v4 as uuid } from "uuid";
+import { TaskModel } from "./TaskModel";
 
 /**
  * This represents a task entity which is the main element in tasks service.
  */
 @Entity("Task")
 export class Task extends BaseEntity {
-    @PrimaryGeneratedColumn()
-    idTask: number;
+  @PrimaryGeneratedColumn()
+  idTask: number;
 
-    @Column()
-    idAgent: number;
+  @Column()
+  idAgent: number;
 
-    @Column() 
-    idVehicle: number; 
+  @Column()
+  idVehicle: number;
 
-    @Column()
-    taskTitle: string; 
+  @Column()
+  taskTitle: string;
 
-    @Column()
-    description: string;
+  @Column()
+  description: string;
 
-    @Column()
-    idTaskState: number;
+  @Column()
+  idTaskState: number;
 
-    @Column()
-    idTaskModel: number; 
+  @CreateDateColumn()
+  assignmentDate: Date;
 
-    @Column({ type: 'timestamp' }) 
-    assignmentDate: Date;
-
-    @Column({ type: 'timestamp' }) 
-    endDate: Date;
-
+  @Column({ type: "timestamp", nullable: true })
+  endDate: Date;
 
   @OneToMany(() => UsedEquipment, (usedEquipment) => usedEquipment.task)
   usedEquipments: UsedEquipment[];
+
+  @ManyToOne(() => TaskModel, (taskModal) => taskModal.tasks)
+  taskModel: TaskModel;
 
   @Column({ type: "uuid" })
   uuid: string;

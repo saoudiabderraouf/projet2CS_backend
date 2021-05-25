@@ -1,8 +1,8 @@
 import { Request, Response } from "express";
 import { getManager } from "typeorm";
 import { read } from "node:fs";
-import {Task} from "../entity/Task";
-
+import { Task } from "../entity/Task";
+import { TaskModel } from "../entity/TaskModel";
 
 /**
  * Welcome endpoint for task management service.
@@ -26,15 +26,28 @@ export const get = (_req: Request, res: Response) => {
  *
  */
 export const addTask = async (req: Request, res: Response) => {
-
+  const {
+    idAgent,
+    idVehicle,
+    taskTitle,
+    description,
+    idTaskState,
+    idTaskModel,
+    assignmentDate,
+    endDate,
+  } = req.body;
   try {
+    const taskModel = await TaskModel.findOneOrFail({ id: idTaskModel });
     const task = Task.create({
-      idAgent: req.body.idAgent,
-      idVehicle: req.body.idVehicle,
-      description: req.body.description,
-      idTaskState: req.body.idTaskState,
+      idAgent,
+      idVehicle,
+      taskTitle,
+      description,
+      taskModel,
+      idTaskState,
+      assignmentDate,
+      endDate,
     });
-
     await task.save();
     return res.send(task);
   } catch (err) {
@@ -43,25 +56,6 @@ export const addTask = async (req: Request, res: Response) => {
   }
 };
 
-        const task = Task.create({
-            idAgent : req.body.idAgent,
-            idVehicle : req.body.idVehicle, 
-            taskTitle : req.body.taskTitle,
-            description : req.body.description,
-            idTaskState : req.body.idTaskState, 
-            idEquipment : req.body.idEquipment, 
-            idTaskModel : req.body.idTaskModel, 
-            assignmentDate : req.body.assignmentDate, 
-            endDate : req.body.endDate
-        }); 
-        await task.save(); 
-        return res.send(task); 
-    } catch (err){
-        console.log(err); 
-        return res.status(500).json(err); 
-    }
-}
-        
 /**
  * Get all tasks request.
  *
@@ -70,9 +64,10 @@ export const addTask = async (req: Request, res: Response) => {
  *
  */
 export async function getTasks(_req: Request, res: Response) {
-
-      try {
-    const tasks = await Task.find({ relations: ["usedEquipments"] });
+  try {
+    const tasks = await Task.find({
+      relations: ["usedEquipments", "taskModel", "taskModel.steps"],
+    });
     console.log(tasks);
     return res.json(tasks);
   } catch (err) {
@@ -83,19 +78,16 @@ export async function getTasks(_req: Request, res: Response) {
 
 // Update task without updating its steps
 export async function updateTaskState(req: Request, res: Response) {
-    const id = req.params.id;
-    try {
-        const task = await Task.findOneOrFail(id);         
-        task.idTaskState = req.body.idTaskState;  
-        await task.save(); 
-        return res.json(task); 
-    } catch (err){
-        console.log(err); 
-        return res.status(500).json(err); 
-    }
-    
-
-
+  const id = req.params.id;
+  try {
+    const task = await Task.findOneOrFail(id);
+    task.idTaskState = req.body.idTaskState;
+    await task.save();
+    return res.json(task);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 }
 
 /**
@@ -107,34 +99,39 @@ export async function updateTaskState(req: Request, res: Response) {
  */
 export async function updateTask(req: Request, res: Response) {
   const id = req.params.id;
-  try {
-    const task = await Task.findOneOrFail(id);
-    task.idAgent = req.body.idAgent;
-    task.idVehicle = req.body.idVehicle;
-    task.description = req.body.description;
-    task.idTaskState = req.body.idTaskState;
+  console.log("Hello");
 
+  try {
+    const task = await Task.findOneOrFail({
+      relations: ["usedEquipments", "taskModel", "taskModel.steps"],
+      where: {
+        uuid: id,
+      },
+    });
+
+    task.idAgent = req.body.idAgent || task.idAgent;
+    task.idVehicle = req.body.idVehicle || task.idVehicle;
+    task.description = req.body.description || task.description;
+    task.idTaskState = req.body.idTaskState || task.idTaskState;
     await task.save();
     return res.json(task);
   } catch (err) {
     console.log(err);
     return res.status(500).json(err);
   }
-
 }
 
 //Delete
 export async function deleteTask(req: Request, res: Response) {
-    let id = parseInt(req.params.id); 
-    try {
-        const task = await Task.findOneOrFail(id);  
-        await task.remove(); 
-        return res.json({ message: 'Task deleted successfully' })
-    } catch (err){
-        console.log(err); 
-        return res.status(500).json(err);
-    }
-    
+  let id = parseInt(req.params.id);
+  try {
+    const task = await Task.findOneOrFail(id);
+    await task.remove();
+    return res.json({ message: "Task deleted successfully" });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 }
 
 /**
@@ -145,33 +142,34 @@ export async function deleteTask(req: Request, res: Response) {
  *
  */
 export async function getTask(req: Request, res: Response) {
-
-    const id =req.params.id; 
-    try {
-        const task = await Task.findOneOrFail(id);  
-        return res.json(task); 
-    } catch (err){
-        console.log(err); 
-        return res.json({ message: 'Task not found' }); 
-    }
-
+  const id = req.params.id;
+  try {
+    const task = await Task.find({
+      relations: ["usedEquipments", "taskModel", "taskModel.steps"],
+      where: {
+        uuid: id,
+      },
+    });
+    return res.json(task);
+  } catch (err) {
+    console.log(err);
+    return res.json({ message: "Task not found" });
+  }
 }
 
-// Find all the tasks of an Agent 
+// Find all the tasks of an Agent
 export async function getTaskByAgentId(req: Request, res: Response) {
-
-    const id = req.params.id;
-    console.log("paramatre id = ", id);
-    try{
-
+  const id = req.params.id;
+  console.log("paramatre id = ", id);
+  try {
     const tasks = await getManager()
-        .createQueryBuilder(Task, "task")
-        .where("task.idAgent = :id", { id: id })
-        .getMany();
+      .createQueryBuilder(Task, "task")
+      .where("task.idAgent = :id", { id: id })
+      .getMany();
 
-    return res.send(tasks); 
-    } catch(err){
-        console.log(err); 
-        return res.status(500).json(err);
-    }
+    return res.send(tasks);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json(err);
+  }
 }

@@ -19,7 +19,10 @@ export class Equipment extends SharedAttributes {
   @Column()
   category: string;
 
-  @OneToMany(() => UsedEquipment, (usedEquipment) => usedEquipment.equipment)
+  @OneToMany(
+    () => UsedEquipment,
+    (usedEquipment: UsedEquipment) => usedEquipment.equipment
+  )
   usedEquipments: UsedEquipment[];
 
   toJSON() {
