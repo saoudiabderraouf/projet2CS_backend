@@ -5,8 +5,10 @@ import { UsedEquipment } from "../src/entity/UsedEquipment";
 const request = require("supertest");
 
 describe("Service Test 🧪 : ", () => {
-  beforeEach(() => {
+  beforeAll(() => {
+    console.log("FirstCall");
     return createConnection({
+      name: "default",
       type: "sqlite",
       database: ":memory:",
       dropSchema: true,
@@ -16,36 +18,76 @@ describe("Service Test 🧪 : ", () => {
     });
   });
 
-  afterEach(() => {
+  afterAll(() => {
+    console.log("LastCall");
     let conn = getConnection();
     return conn.close();
   });
 
-  it("Returns welcome body successfully", (done) => {
-    request("http://localhost:8080")
-      .get("/")
-      .expect(200)
-      .end((err: Error, res: Response) => {
-        if (err) {
-          console.log(err);
-        }
-        const resultData = res.text;
-        const expectedData = "<h1> Welcome To Material Service 🤝 </h1>";
-        expect(resultData).toEqual(expectedData);
-        done();
-      });
+  describe("API Calls Test 📢", () => {
+    it("Returns welcome body successfully", () => {
+      request("http://localhost:8080").get("/").expect(200);
+    });
+    it("Calls get method for all the equipments URI ", () => {
+      request("http://localhost:8080")
+        .get("/tasks")
+        .expect("Content-Type", /json/)
+        .expect(200);
+    });
+    it("Calls create method for the equipments URI ", () => {
+      request("http://localhost:8080")
+        .post("/task")
+        .send({
+          idAgent: 100,
+          idVehicle: 1,
+          description: "Task from unit test JASMINE",
+          taskTitle: "Unit test",
+          idTaskState: 1,
+          idTaskModel: 3,
+        })
+        .expect("Content-Type", /json/)
+        .expect(200);
+    });
   });
 
-  it("Stores New Equipment Model 🥊😅", async () => {
-    const equipData = await Equipment.insert({
-      equipmentName: "Huile",
-      unitPrice: 1000,
-      category: "Liquide",
+  describe("CRUD Operation on the DB 📊", () => {
+    it("Stores & Read & Updates new equipment model", async () => {
+      const equipExpectedToRead = Equipment.create({
+        equipmentName: "Equipment to read",
+        unitPrice: 1000,
+        category: "Liquide",
+      });
+      // Creation
+      await equipExpectedToRead.save();
+
+      const equipResultRead = await Equipment.findOneOrFail({
+        equipmentName: "Equipment to read",
+      });
+      // Test Read
+      expect(equipExpectedToRead).toEqual(equipResultRead);
+      equipResultRead.category = "CategoryTestUpdated";
+      const equipExpectedToUpdate = equipResultRead;
+
+      // Test Updated
+      const equipResultUpdate = await equipResultRead.save();
+      expect(equipExpectedToUpdate).toEqual(equipResultUpdate);
     });
-    const result = equipData.identifiers[0];
 
-    const [equipExpected] = await Equipment.find();
+    it("Delete equipment model", async () => {
+      const equipData = Equipment.create({
+        equipmentName: "Equipment to delete",
+        unitPrice: 1000,
+        category: "Liquide",
+      });
+      await equipData.save();
 
-    expect(result.idEquipment).toEqual(equipExpected.idEquipment);
+      const equipExpected = await Equipment.findOneOrFail({
+        equipmentName: "Equipment to delete",
+      });
+
+      const equipRemoved = await equipExpected.remove();
+
+      expect(equipRemoved.idEquipment).toBeUndefined;
+    });
   });
 });
