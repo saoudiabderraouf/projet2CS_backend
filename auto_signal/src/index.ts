@@ -19,13 +19,7 @@ app.use(bodyParser.urlencoded({
 
 app.use(Router)
 
-/*createConnection().then(async _connection => {   
-    app.listen(8001, () => {
-        console.log("server started.")
-    })
-    
 
-}).catch(error => console.log(error));*/
 createConnection();
 
 const server = app.listen(8002, () => {
