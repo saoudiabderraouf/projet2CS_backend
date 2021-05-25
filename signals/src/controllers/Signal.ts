@@ -1,5 +1,15 @@
 import { Request, Response } from "express";
 import {Signal} from "../entity/Signal";
+import {Vehicle} from "../entity/Vehicle";
+import {Rental} from "../entity/Rental";
+import {Tenant} from "../entity/Tenant";
+import {User} from "../entity/User";
+
+
+
+
+import { getManager } from "typeorm";
+
 
 
 export const getSignal =  (req: Request, res: Response) => {
@@ -55,6 +65,78 @@ export const deleteSignal = async (req: Request, res: Response) => {
             message: "Erreur Serveur"
         });
     });
+
 }
+    //getSignals panne 
+    export const getSignalPannesInformation = async (_req: Request, res: Response) => {
+        try{
+        var result={}
+        var signalsNotTreated=[]
+        var signalsTreated=[]
+        var index1=0;
+        var index2=0
+        const signals = await Signal.find({signalType:"panne"});
+        for(var i=0;i<signals.length;i++){
+            
+            const vehicle = await Vehicle.findOneOrFail({idVehicle:signals[i].idVehicle});
+            const rental = await Rental.find({idVehicle:signals[i].idVehicle});
+            const tenant = await Tenant.findOneOrFail({idTenant:rental[rental.length-1].idTenant});
+            const user = await User.findOneOrFail({idUser:tenant.idUser});
+
+            if(signals[i].treated){
+            signalsTreated[index1]=Object.assign(signals[i],vehicle, rental[rental.length-1],user)
+            index1++
+            }else{
+            signalsNotTreated[index2]=Object.assign(signals[i],vehicle, rental[rental.length-1],user)
+            index2++
+            }
+        }
+       result={
+           signlasTreated: signalsTreated,
+           signalsNotTreated:signalsNotTreated
+       }
+        res.status(200).json(result)
+    }catch (err){
+        console.log(err)
+        res.status(500).json(err)
+
+    }
+    }
+
+    export const getSignaTheftlInformation = async (_req: Request, res: Response) => {
+        try{
+        var result={}
+        var signalsNotTreated=[]
+        var signalsTreated=[]
+        var index1=0;
+        var index2=0
+        const signals = await Signal.find({signalType:"theft"});
+        for(var i=0;i<signals.length;i++){
+            
+            const vehicle = await Vehicle.findOneOrFail({idVehicle:signals[i].idVehicle});
+            const rental = await Rental.find({idVehicle:signals[i].idVehicle});
+            const tenant = await Tenant.findOneOrFail({idTenant:rental[rental.length-1].idTenant});
+            const user = await User.findOneOrFail({idUser:tenant.idUser});
+
+            if(signals[i].treated){
+            signalsTreated[index1]=Object.assign(signals[i],vehicle, rental[rental.length-1],user)
+            index1++
+            }else{
+            signalsNotTreated[index2]=Object.assign(signals[i],vehicle, rental[rental.length-1],user)
+            index2++
+            }
+        }
+       result={
+           signlasTreated: signalsTreated,
+           signalsNotTreated:signalsNotTreated
+       }
+        res.status(200).json(result)
+    }catch (err){
+        console.log(err)
+        res.status(500).json(err)
+
+    }
+    }
+ 
 
 
