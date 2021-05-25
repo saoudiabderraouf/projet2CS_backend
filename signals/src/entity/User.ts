@@ -16,4 +16,7 @@ export class User extends BaseEntity {
     @Column()
     phoneNumber:number;
 
+    @Column()
+    address:String;
+
 }
