@@ -1,7 +1,7 @@
 import { createConnection, getConnection, InsertResult } from "typeorm";
 import { Task } from "../src/entity/Task";
-import { Step } from "../src/entity/Step"; 
-import { TaskModel } from "../src/entity/TaskModel"; 
+import { Step } from "../src/entity/Step";
+import { TaskModel } from "../src/entity/TaskModel";
 import { UsedEquipment } from "../src/entity/UsedEquipment";
 const request = require("supertest");
 
@@ -53,15 +53,16 @@ describe("Service Test 🧪 : ", () => {
 
   describe("CRUD Operation on the DB 📊", () => {
     it("Stores & Read & Updates new task model", async () => {
+      console.log("Here ENV VAR : ", process.env.NODE_ENV);
       const taskExpectedToRead = Task.create({
         idAgent: 1009,
-        idVehicle: 6790, 
-        taskTitle: "Task to read", 
-        description: "this is a task from the JASMINE tests", 
-        // taskModel: 
-        idTaskState: 4, 
-        assignmentDate: "11-05-2021", 
-        endDate: "25-05-2021", 
+        idVehicle: 6790,
+        taskTitle: "Task to read",
+        description: "this is a task from the JASMINE tests",
+        // taskModel:
+        idTaskState: 4,
+        /* assignmentDate: "11-05-2021",
+        endDate: "25-05-2021", */
       });
       // Creation
       await taskExpectedToRead.save();
@@ -81,13 +82,14 @@ describe("Service Test 🧪 : ", () => {
 
     it("Delete task", async () => {
       const taskData = Task.create({
-        idVehicle: 6790, 
-        taskTitle: "Task to delete", 
-        description: "this is a task from the JASMINE tests", 
-        // taskModel: 
-        idTaskState: 4, 
-        assignmentDate: "11-05-2021", 
-        endDate: "25-05-2021", 
+        idAgent: 1009,
+        idVehicle: 6790,
+        taskTitle: "Task to delete",
+        description: "this is a task from the JASMINE tests",
+        // taskModel:
+        idTaskState: 4,
+        /* assignmentDate: "11-05-2021", 
+        endDate: "25-05-2021",  */
       });
       await taskData.save();
 
@@ -100,11 +102,6 @@ describe("Service Test 🧪 : ", () => {
     });
   });
 });
-
-
-
-
-
 
 // const request = require("supertest");
 
