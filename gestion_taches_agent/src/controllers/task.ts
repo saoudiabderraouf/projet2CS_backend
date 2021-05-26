@@ -80,7 +80,12 @@ export async function getTasks(_req: Request, res: Response) {
 export async function updateTaskState(req: Request, res: Response) {
   const id = req.params.id;
   try {
-    const task = await Task.findOneOrFail(id);
+    const task = await Task.findOneOrFail({
+      relations: ["usedEquipments", "taskModel", "taskModel.steps"],
+      where: {
+        uuid: id,
+      }, 
+    });
     task.idTaskState = req.body.idTaskState;
     await task.save();
     return res.json(task);
@@ -164,6 +169,8 @@ export async function getTaskByAgentId(req: Request, res: Response) {
     const tasks = await getManager()
       .createQueryBuilder(Task, "task")
       .where("task.idAgent = :id", { id: id })
+      .leftJoinAndSelect("task.usedEquipments", "usedEquipments")
+      .leftJoinAndSelect("task.taskModel", "taskModel")
       .getMany();
 
     return res.send(tasks);
