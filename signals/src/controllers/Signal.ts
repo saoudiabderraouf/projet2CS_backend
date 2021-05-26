@@ -69,7 +69,7 @@ export const deleteSignal = async (req: Request, res: Response) => {
 }
 //update the state of signal treated=true 
 export async function updateSignalsState(req: Request, res: Response) {
-    const id= Number(req.params.idSignal)
+    const id= Number(req.query.idSignal)
     try {
         const signal= await Signal.findOneOrFail({idSignal:id})
         signal.treated=true,
