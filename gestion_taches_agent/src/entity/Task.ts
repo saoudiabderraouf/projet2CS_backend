@@ -38,7 +38,10 @@ export class Task extends BaseEntity {
   @CreateDateColumn()
   assignmentDate: Date;
 
-  @Column({ type: "timestamp", nullable: true })
+  @Column({
+    type: process.env.NODE_ENV == "test" ? undefined : "timestamp",
+    nullable: true,
+  })
   endDate: Date;
 
   @OneToMany(() => UsedEquipment, (usedEquipment) => usedEquipment.task)
