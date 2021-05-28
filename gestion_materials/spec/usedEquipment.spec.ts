@@ -95,6 +95,7 @@ describe("Service Test - UsedEquipments - 🧪 : ", () => {
       expect(ExpectedToRead.createdAt).toEqual(ResultRead.createdAt);
       expect(ExpectedToRead.updatedAt).toEqual(ResultRead.updatedAt);
       expect(ExpectedToRead.quantity).toEqual(ResultRead.quantity);
+      expect;
 
       ResultRead.description = "CategoryTestUpdated";
       const equipExpectedToUpdate = ResultRead;
