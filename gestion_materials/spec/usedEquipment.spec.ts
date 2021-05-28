@@ -65,19 +65,42 @@ describe("Service Test - UsedEquipments - 🧪 : ", () => {
         unitPrice: 1000,
         category: "Liquide",
       });
-      // Creation
-      await equipExpectedToRead.save();
 
-      const equipResultRead = await Equipment.findOneOrFail({
-        equipmentName: "Equipment to read",
+      const resEqui = await equipExpectedToRead.save();
+
+      const TaskExpectedToRead = Task.create({
+        idAgent: 100,
+        idVehicle: 1,
+        description:
+          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+        idTaskState: 1,
+      });
+
+      const resTask = await TaskExpectedToRead.save();
+
+      const ExpectedToRead = UsedEquipment.create({
+        description: "UsedEquipment to read",
+        quantity: 20,
+        equipment: resEqui,
+        task: resTask,
+      });
+      // Creation
+      await ExpectedToRead.save();
+
+      const ResultRead = await UsedEquipment.findOneOrFail({
+        description: "UsedEquipment to read",
       });
       // Test Read
-      expect(equipExpectedToRead).toEqual(equipResultRead);
-      equipResultRead.category = "CategoryTestUpdated";
-      const equipExpectedToUpdate = equipResultRead;
+      expect(ExpectedToRead.description).toEqual(ResultRead.description);
+      expect(ExpectedToRead.createdAt).toEqual(ResultRead.createdAt);
+      expect(ExpectedToRead.updatedAt).toEqual(ResultRead.updatedAt);
+      expect(ExpectedToRead.quantity).toEqual(ResultRead.quantity);
+
+      ResultRead.description = "CategoryTestUpdated";
+      const equipExpectedToUpdate = ResultRead;
 
       // Test Updated
-      const equipResultUpdate = await equipResultRead.save();
+      const equipResultUpdate = await ResultRead.save();
       expect(equipExpectedToUpdate).toEqual(equipResultUpdate);
     });
 
