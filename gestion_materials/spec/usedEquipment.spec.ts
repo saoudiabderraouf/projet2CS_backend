@@ -105,20 +105,39 @@ describe("Service Test - UsedEquipments - 🧪 : ", () => {
     });
 
     it("Delete a used equipment", async () => {
-      const equipData = Equipment.create({
-        equipmentName: "Equipment to delete",
+      const equipExpectedToRead = Equipment.create({
+        equipmentName: "Equipment to read",
         unitPrice: 1000,
         category: "Liquide",
       });
-      await equipData.save();
 
-      const equipExpected = await Equipment.findOneOrFail({
-        equipmentName: "Equipment to delete",
+      const resEqui = await equipExpectedToRead.save();
+
+      const TaskExpectedToRead = Task.create({
+        idAgent: 100,
+        idVehicle: 1,
+        description:
+          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.",
+        idTaskState: 1,
       });
 
-      const equipRemoved = await equipExpected.remove();
+      const resTask = await TaskExpectedToRead.save();
 
-      expect(equipRemoved.idEquipment).toBeUndefined;
+      const ExpectedToRead = UsedEquipment.create({
+        description: "UsedEquipment to read",
+        quantity: 20,
+        equipment: resEqui,
+        task: resTask,
+      });
+      // Creation
+      await ExpectedToRead.save();
+
+      const ResultRead = await UsedEquipment.findOneOrFail({
+        description: "UsedEquipment to read",
+      });
+
+      const equipRemoved = await ResultRead.remove();
+      expect(equipRemoved.idUsedEquipment).toBeUndefined;
     });
   });
 });
