@@ -930,7 +930,8 @@ export class InitialDatabase1620771464739 implements MigrationInterface {
                 {
                     name: "idUserSource",
                     type: "int",
-                    default:0
+                    nulable:true,
+                    default:null
                 },
                 {
                     name: "idVehicle",
