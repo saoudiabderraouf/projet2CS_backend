@@ -14,7 +14,7 @@ const app = express();
 app.use(json());
 app.use(cors());
 app.use(morgan("dev"));
-app.use("/equipment-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/material-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 dotenv.config();
 

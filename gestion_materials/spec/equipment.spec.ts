@@ -4,7 +4,7 @@ import { Task } from "../src/entity/Task";
 import { UsedEquipment } from "../src/entity/UsedEquipment";
 const request = require("supertest");
 
-describe("Service Test 🧪 : ", () => {
+describe("Service Test - Equipments - 🧪 : ", () => {
   beforeAll(() => {
     console.log("FirstCall");
     return createConnection({
@@ -30,20 +30,28 @@ describe("Service Test 🧪 : ", () => {
     });
     it("Calls get method for all the equipments URI ", () => {
       request("http://localhost:8080")
-        .get("/tasks")
+        .get("/equipment")
         .expect("Content-Type", /json/)
         .expect(200);
     });
     it("Calls create method for the equipments URI ", () => {
       request("http://localhost:8080")
-        .post("/task")
+        .post("/equipment")
         .send({
-          idAgent: 100,
-          idVehicle: 1,
-          description: "Task from unit test JASMINE",
-          taskTitle: "Unit test",
-          idTaskState: 1,
-          idTaskModel: 3,
+          equipmentName: "Huile",
+          unitPrice: 6,
+          category: "Liquide",
+        })
+        .expect("Content-Type", /json/)
+        .expect(200);
+    });
+    it("Calls update method for the equipments URI ", () => {
+      request("http://localhost:8080")
+        .post("/equipment")
+        .send({
+          equipmentName: "Huile",
+          unitPrice: 6,
+          category: "Liquide",
         })
         .expect("Content-Type", /json/)
         .expect(200);
