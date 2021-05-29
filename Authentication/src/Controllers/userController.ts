@@ -9,6 +9,7 @@ import { checkRole } from "../Middleware/checkRole";
 export class UserController {
   public signup = async (_req: Request, res: Response) => {
     try {
+      console.log(_req.body);
       const user = await User.create({
         email: _req.body.email,
         password: _req.body.password,
@@ -79,7 +80,7 @@ export class UserController {
           if (err) throw err;
           _res.status(200).json({
             token,
-            id: user.idUser
+            id: user.idUser,
           });
         }
       );
@@ -121,8 +122,8 @@ export class UserController {
   };
 
   public user = async (_: Request, res: Response) => {
-    res.json(res.locals.jwtPayload)
-  }
+    res.json(res.locals.jwtPayload);
+  };
 
   public update = async (_req: Request, res: Response) => {
     const idUser = parseInt(_req.params.uuid);
@@ -150,7 +151,6 @@ export class UserController {
 
     try {
       const user = await User.findOneOrFail({ idUser });
-
       await user.remove();
 
       return res.status(204).json({ message: "User deleted successfully" });
