@@ -1,5 +1,7 @@
 import { createConnection, getConnection, InsertResult } from "typeorm";
 import { User } from "../src/entity/Authentication";
+import { checkJwt } from "../src/Middleware/checkJwt";
+import { generateToken } from "../src/Middleware/generateToken";
 const request = require("supertest");
 
 describe("Service Test 🧪 : ", () => {
@@ -15,9 +17,9 @@ describe("Service Test 🧪 : ", () => {
     });
     it("Calls create method for the user signin ", (done) => {
       request("http://localhost:8000")
-        .post("/signin/")
+        .post("/signin")
         .send({
-          email: "gs_rihani@esi.dz",
+          email: "test@esi.dz",
           password: "rootroot",
         })
         .expect("Content-Type", /json/)
@@ -33,8 +35,8 @@ describe("Service Test 🧪 : ", () => {
         .post("/signup/")
         .send({
           email: "test@esi.dz",
-          password: "test",
-          idUser: 4,
+          password: "rootroot",
+          idUser: 5,
         })
         .expect("Content-Type", /json/)
         .expect(200)

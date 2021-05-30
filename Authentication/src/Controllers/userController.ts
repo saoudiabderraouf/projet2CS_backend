@@ -5,6 +5,7 @@ import * as jwt from "jsonwebtoken";
 import { User } from "../entity/Authentication";
 import { getRepository } from "typeorm";
 import { checkRole } from "../Middleware/checkRole";
+import { generateToken } from "../Middleware/generateToken";
 
 export class UserController {
   public signup = async (_req: Request, res: Response) => {
@@ -23,24 +24,16 @@ export class UserController {
 
       const payload = {
         user: {
-          id: user.idAuthUser,
+          id: user.idUser,
         },
       };
 
-      jwt.sign(
-        payload,
-        "randomString",
-        {
-          expiresIn: 10000,
-        },
-        (err, token) => {
-          if (err) throw err;
-          res.status(201).json({
-            token,
-            user,
-          });
-        }
-      );
+      const token = await generateToken(payload);
+
+      res.status(201).json({
+        token,
+        user,
+      });
     } catch (err) {
       console.log(err);
       console.log(err.message);
@@ -59,10 +52,11 @@ export class UserController {
         });
 
       const isMatch = await bcrypt.compare(_req.body.password, user.password);
-      if (!isMatch)
+      if (!isMatch) {
         return _res.status(400).json({
           message: "Incorrect Password !",
         });
+      }
 
       const payload = {
         user: {
@@ -70,20 +64,11 @@ export class UserController {
         },
       };
 
-      jwt.sign(
-        payload,
-        "randomString",
-        {
-          expiresIn: 10000,
-        },
-        (err, token) => {
-          if (err) throw err;
-          _res.status(200).json({
-            token,
-            id: user.idUser,
-          });
-        }
-      );
+      const token = await generateToken(payload);
+      _res.status(200).json({
+        token,
+        id: user.idUser,
+      });
     } catch (e) {
       console.error(e);
       _res.status(500).json({
