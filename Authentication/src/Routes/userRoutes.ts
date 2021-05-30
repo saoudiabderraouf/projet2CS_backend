@@ -20,12 +20,9 @@ export class AuthenticationRoutes {
    */
   public routes() {
     this.userController = new UserController();
-    this.router.get(
-      "/",
-      [checkJwt, checkRole(["tenant"])],
-      this.userController.index
-    );
-    this.router.get("/check", [checkJwt], this.userController.check)
+    this.router.get("/", this.userController.index);
+    this.router.get("/user", [checkJwt], this.userController.user)
+    this.router.get("/check", [checkJwt], this.userController.check);
     this.router.post("/signup", this.userController.signup);
     this.router.post("/signin", this.userController.signin);
     this.router.put("/:uuid", this.userController.update);
