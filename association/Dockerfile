@@ -6,7 +6,6 @@ EXPOSE 8000
 RUN npm ci
 COPY . /src
 
-
 FROM base as production
 ENV NODE_ENV=production
 

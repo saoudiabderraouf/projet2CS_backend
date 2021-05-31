@@ -1,79 +1,6 @@
 version: "3.8"
 
 services:
-<<<<<<< HEAD
-    redis:
-        image: "redis:alpine"
-        ports:
-            - 6379:6379
-        environment:
-            - ALLOW_EMPTY_PASSWORD=yes
-    vehicles:
-        build:
-            context: ./vehicles
-            target: development
-        volumes:
-            - ./vehicles:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8000:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    gestion_taches_agent:
-        build:
-            context: ./gestion_taches_agent
-            target: development
-        volumes:
-            - ./gestion_taches_agent:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8001:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    user:
-        build:
-            context: ./user
-            target: development
-        volumes:
-            - ./user:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8100:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*
-    tracking:        
-        build:
-            context: ./tracking
-            target: development
-        volumes:
-            - ./tracking:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8003:8001"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*    
-    borne-vehicule:
-        build:
-            context: ./borne-vehicule
-            target: development
-        volumes:
-            - ./borne-vehicule:/src
-            - /src/node_modules
-        command: npm run start:dev
-        ports:
-            - "8200:8000"
-        environment: 
-            NODE_ENV: development
-            DEBUG: src:*  
-=======
   redis:
     image: "redis:alpine"
     ports:
@@ -94,7 +21,6 @@ services:
     environment:
       NODE_ENV: development
       DEBUG: src:*
->>>>>>> 661c700c4a575a4e27a1f7eced70580300571780
 
   gestion_taches_agent:
     build:
